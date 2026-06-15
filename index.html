@@ -3,13 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Space Defender - Admin Fix</title>
-    
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+    <title>Harvest Valley - Smart Copy</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; touch-action: none; user-select: none; -webkit-user-select: none; }
+        
+        #loader {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a2f1a; color: #fff; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 99999; pointer-events: auto;
+        }
+        #loader h1 { color: #4CAF50; margin-bottom: 20px; text-shadow: 2px 2px #000; text-align: center; }
+        #loader p { color: #ccc; font-size: 14px; margin-bottom: 30px; }
+        
+        #btn-start {
+            padding: 20px 40px; font-size: 20px; background: #4CAF50; color: white; 
+            border: none; border-radius: 10px; font-weight: bold; cursor: pointer; 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            pointer-events: auto !important; position: relative; z-index: 100000;
+        }
+        #btn-start:active { transform: scale(0.95); background: #388E3C; }
+        
+        #ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100;
+            display: none;
+        }
+        
+        .hud-panel {
+            background: rgba(0, 0, 0, 0.7); padding: 8px; border-radius: 8px;
+            color: white; margin: 10px; pointer-events: auto; backdrop-filter: blur(4px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
 
+        #money-display { position: absolute; top: 10px; right: 10px; font-weight: bold; font-size: 18px; color: #FFD700; text-shadow: 1px 1px #000; }
+        
+        #inventory-box {
+            position: absolute; top: 10px; left: 10px;
+            display: grid; grid-template-columns: repeat(3, 40px); gap: 5px;
+        }
+        .inv-slot {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.1);
+            border: 2px solid #555; border-radius: 4px; display: flex;
+            align-items: center; justify-content: center; font-size: 10px; color: #fff;
+            position: relative; font-weight: bold;
+        }
+        .inv-count { position: absolute; bottom: 0; right: 0; background: red; border-radius: 50%; width: 14px; height: 14px; font-size: 9px; display: flex; align-items: center; justify-content: center; border: 1px solid white; }
+
+        #interact-msg {
+            position: absolute; bottom: 30%; left: 50%; transform: translate(-50%, 0);
+            background: rgba(0,0,0,0.85); color: #fff; padding: 8px 16px;
+            border-radius: 20px; font-weight: bold; display: none; pointer-events: none;
+            z-index: 101; border: 1px solid white; text-align: center;
+        }
+
+        /* SHOP UI */
+        #shop-modal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 420px; background: #fff; border-radius: 10px;
+            padding: 20px; display: none; flex-direction: column; align-items: center;
+            z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            pointer-events: auto; touch-action: manipulation;
+        }
+        #shop-modal h2 { margin-top: 0; color: #2E7D32; font-family: 'Arial Black', sans-serif; border-bottom: 2px solid #ddd; width:100%; padding-bottom:10px; }
+        .shop-item {
+            display: flex; justify-content: space-between; width: 100%; padding: 12px 0;
+            border-bottom: 1px solid #eee; align-items: center; font-size: 12px;
+        }
+        .btn-buy {
+            background: #2E7D32; color: white; border: none; padding: 8px 14px;
+            border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif;
+        }
+        .btn-buy:active { background: #1B5E20; transform: scale(0.95); }
+        .btn-buy:disabled { background: #ccc; }
+        
+        .btn-gold { background: #FFD700; color: black; }
+        .btn-link { background: #2196F3; color: white; }
+        .btn-robot { background: #FF9800; color: white; }
+
+        .btn-close-shop {
+            background: #d32f2f; color: white; border: none; padding: 10px;
+            border-radius: 5px; font-weight: bold; width: 100%; margin-top: 15px;
+            cursor: pointer; z-index: 2000 !important;
+        }
+        .btn-close-shop:active { background: #b71c1c; }
+
+        /* COPY CONTAINER */
+        .copy-container {
+            margin-top:10px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px; 
+            width: 100%;
+        }
+        
+        #code-result {
+            font-weight: bold; 
+            color: #333; 
+            word-break: break-all; 
+            font-size: 16px; 
+            background: #eee; 
+            padding: 12px; 
+            text-align: center; 
+            border: 2px dashed #999; 
+            min-height: 45px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            user-select: text; /* Memungkinkan seleksi manual */
+            -webkit-user-select: text;
+        }
+
+        .btn-copy {
+            background: #2196F3; color: white; border: none; padding: 10px 15px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px;
+            white-space: nowrap; width: 100%;
+        }
+        .btn-copy:active { background: #1976D2; transform: scale(0.98); }
+
+        /* CONTROLS */
+        #controls {
+            position: absolute; bottom: 20px; width: 100%; height: 140px;
+            display: flex; justify-content: space-between; padding: 0 20px; pointer-events: none; z-index: 90;
+        }
+        .control-group { pointer-events: auto; }
+        
+        .d-pad {
+            display: grid; grid-template-columns: 60px 60px 60px; grid-template-rows: 50px 50px; gap: 5px;
+        }
+        .pad-btn {
+            background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 8px; color: white; font-size: 24px; display: flex;
+            align-items: center; justify-content: center; user-select: none;
+            touch-action: manipulation;
+        }
+        .pad-btn:active { background: rgba(255,255,255,0.4); }
+
+        .action-btn {
+            width: 70px; height: 70px; background: #E91E63; border-radius: 50%;
+            border: 4px solid white; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 16px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            touch-action: manipulation; font-family: sans-serif;
+        }
+        .action-btn:active { transform: scale(0.95); background: #C2185B; }
+    </style>
+</head>
+<body>
+
+    <!-- IMPORT MAP THREE.JS -->
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+
+    <!-- LOADING SCREEN -->
+    <div id="loader">
+        <h1>HARVEST VALLEY</h1>
+        <p>Auto & Manual Copy Fix</p>
+        <button id="btn-start">MULAI GAME</button>
+    </div>
+
+    <!-- UI LAYER -->
+    <div id="ui-layer">
+        <div id="money-display" class="hud-panel"> <span id="money-val">0</span></div>
+        <div id="inventory-box" class="hud-panel">
+            <div class="inv-slot" id="slot-0"><div class="inv-count" id="count-0">0</div></div>
+            <div class="inv-slot" id="slot-1"><div class="inv-count" id="count-1">0</div></div>
+            <div class="inv-slot" id="slot-2"><div class="inv-count" id="count-2">0</div></div>
+        </div>
+        <div id="interact-msg">TEKAN ACTION</div>
+        
+        <!-- SHOP MODAL -->
+        <div id="shop-modal">
+            <h2 id="shop-title">TOKO</h2>
+            <div id="shop-items"></div>
+            
+            <div id="redeem-section" style="margin-top:15px; border-top:1px solid #ccc; padding-top:10px; width:100%; display:none;">
+                <p style="margin:0 0 10px 0; color:#333; font-size:12px;"><strong>Beli Kode Unik</strong><br>Harga: 500 Uang</p>
+                <button id="btn-buy-code" class="btn-buy" style="background:#E91E63; width:100%; padding:10px;">BELI KODE</button>
+                
+                <div class="copy-container">
+                    <div id="code-result"></div>
+                    <button id="btn-copy-code" class="btn-copy"> TUNGGU...</button>
+                    <div id="copy-status" style="font-size:10px; color:#666; text-align:center;"></div>
+                </div>
+            </div>
+
+            <button id="btn-close-shop" class="btn-close-shop">TUTUP</button>
+        </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div id="controls">
+        <div class="control-group d-pad">
+            <div></div>
+            <div class="pad-btn" id="btn-up"></div>
+            <div></div>
+            <div class="pad-btn" id="btn-left"></div>
+            <div class="pad-btn" id="btn-down"></div>
+            <div class="pad-btn" id="btn-right"></div>
+        </div>
+        <div class="control-group">
+            <div class="action-btn" id="btn-action">ACT</div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        // --- FIREBASE CONFIG ---
         const firebaseConfig = {
             apiKey: "AIzaSyDXKeIOlD8r0xNM61pzh82og0DBQvlnxEk",
             authDomain: "fire-me-a2f00.firebaseapp.com",
@@ -19,560 +221,637 @@
             messagingSenderId: "1010150322376",
             appId: "1:1010150322376:web:625ab284498f3e2bea75fd"
         };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        window.firebaseDb = db;
-
-        window.isAdminMode = false; 
-
-        // ==========================================
-        // 1. LOGIKA ADMIN & BACKDOOR
-        // ==========================================
         
-        const ADMIN_KEY = "ADMIN666";
-        const inputField = document.getElementById('secret-input');
-        const startBtn = document.getElementById('start-btn');
-
-        if(inputField) {
-            inputField.addEventListener('input', (e) => {
-                const val = e.target.value.trim().toUpperCase();
-                if (val === ADMIN_KEY) {
-                    activateAdminMode();
-                } else {
-                    // Hanya reset jika user menghapus huruf sehingga tidak lagi Tolae666
-                    // DAN jika tombol bukan tombol admin panel
-                    if (val !== ADMIN_KEY && startBtn.innerText !== "OPEN ADMIN PANEL") {
-                        // Kembalikan ke status cooldown/normal terakhir
-                        checkPlayEligibility(); 
-                    }
-                }
-            });
+        let db = null;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            console.log("Firebase Connected");
+        } catch (e) {
+            console.warn("Firebase init error:", e);
         }
 
-        function activateAdminMode() {
-            // Saat admin mode aktif, PASTIKAN tombol tidak disabled agar bisa diklik
-            startBtn.disabled = false; 
-            startBtn.innerText = "OPEN ADMIN PANEL";
-            startBtn.classList.add('hack-btn');
-            startBtn.onclick = openAdminPanel;
-            inputField.classList.add('admin-active');
+        // --- VARIABLES ---
+        let money = 0;
+        window.money = 0;
+        const inventory = { seed_normal: 5, seed_gold: 0, crop: 0 };
+        let isShopOpen = false;
+        let gameStarted = false;
+        let currentCode = "";
+        
+        const keys = { w: false, a: false, s: false, d: false, action: false };
+        const playerSpeed = 0.1;
+        const camOffset = new THREE.Vector3(0, 6, 9);
+        let targetRotation = 0;
+        let isMoving = false;
+        let currentInteractable = null;
+
+        // --- ASSET FUNCTIONS ---
+        function createFace(parentGroup, skinColor) {
+            const eyeGeo = new THREE.BoxGeometry(0.15, 0.15, 0.05);
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+            leftEye.position.set(-0.15, 0.1, 0.41); parentGroup.add(leftEye);
+            const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rightEye.position.set(0.15, 0.1, 0.41); parentGroup.add(rightEye);
+            const mouthGeo = new THREE.BoxGeometry(0.3, 0.05, 0.05);
+            const mouthMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+            mouth.position.set(0, -0.1, 0.41); parentGroup.add(mouth);
         }
 
-        window.openAdminPanel = async function() {
-            const adminPanel = document.getElementById('admin-panel');
-            const codeList = document.getElementById('admin-code-list');
+        function createRobloxChar(color, skinColor, hatType) {
+            const group = new THREE.Group();
+            const headGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+            const headMat = new THREE.MeshStandardMaterial({ color: skinColor });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 1.6; head.castShadow = true; group.add(head);
+            createFace(head, skinColor);
+
+            const torsoGeo = new THREE.BoxGeometry(0.6, 0.7, 0.4);
+            const torsoMat = new THREE.MeshStandardMaterial({ color: color });
+            const torso = new THREE.Mesh(torsoGeo, torsoMat);
+            torso.position.y = 1.0; torso.castShadow = true; group.add(torso);
+
+            const armGeo = new THREE.BoxGeometry(0.2, 0.7, 0.2);
+            const armMat = new THREE.MeshStandardMaterial({ color: skinColor });
+            const leftArm = new THREE.Mesh(armGeo, armMat);
+            leftArm.position.set(-0.4, 1.0, 0); leftArm.castShadow = true; group.add(leftArm);
+            const rightArm = new THREE.Mesh(armGeo, armMat);
+            rightArm.position.set(0.4, 1.0, 0); rightArm.castShadow = true; group.add(rightArm);
+
+            const legGeo = new THREE.BoxGeometry(0.25, 0.8, 0.25);
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x1e88e5 });
+            const leftLeg = new THREE.Mesh(legGeo, legMat);
+            leftLeg.position.set(-0.15, 0.4, 0); group.add(leftLeg);
+            const rightLeg = new THREE.Mesh(legGeo, legMat);
+            rightLeg.position.set(0.15, 0.4, 0); group.add(rightLeg);
+
+            if (hatType === 'farmer') {
+                const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.1, 16), new THREE.MeshStandardMaterial({ color: 0xD7CCC8 }));
+                brim.position.y = 2.05; group.add(brim);
+                const top = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0xD7CCC8 }));
+                top.position.y = 2.2; group.add(top);
+            } else if (hatType === 'merchant') {
+                const cap = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.2, 0.9), new THREE.MeshStandardMaterial({color: 0xFFD700}));
+                cap.position.set(0, 2.0, 0.05); group.add(cap);
+                const visor = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.25, 0.5), new THREE.MeshStandardMaterial({color: 0xFFA000}));
+                visor.position.set(0, 1.95, 0.3); group.add(visor);
+            } else if (hatType === 'assist') {
+                const cap = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.2, 16), new THREE.MeshStandardMaterial({color: 0xFBC02D}));
+                cap.position.y = 2.1; group.add(cap);
+                const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.5), new THREE.MeshBasicMaterial({color:0xff0000}));
+                ant.position.y = 2.3; group.add(ant);
+            } else if (hatType === 'redeem') {
+                const cap = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.15, 0.9), new THREE.MeshStandardMaterial({color: 0x000000}));
+                cap.position.set(0, 2.1, 0.05); group.add(cap);
+                const eyeGeo = new THREE.BoxGeometry(0.2, 0.2, 0.05);
+                const eyeMat = new THREE.MeshBasicMaterial({color: 0x00BCD4});
+                const eye1 = new THREE.Mesh(eyeGeo, eyeMat); eye1.position.set(-0.25, 2.2, 0.46); group.add(eye1);
+                const eye2 = new THREE.Mesh(eyeGeo, eyeMat); eye2.position.set(0.25, 2.2, 0.46); group.add(eye2);
+            }
+
+            group.userData = { leftLeg, rightLeg, leftArm, rightArm, walkTime: 0 };
+            return group;
+        }
+
+        function createCat() {
+            const catGroup = new THREE.Group();
+            const bodyGeo = new THREE.CylinderGeometry(0.3, 0.6, 0.5, 8);
+            const furMat = new THREE.MeshStandardMaterial({ color: 0xF5F5DC });
+            const body = new THREE.Mesh(bodyGeo, furMat);
+            body.position.y = 0.4;
+            body.castShadow = true;
+            catGroup.add(body);
+            const headGeo = new THREE.SphereGeometry(0.25, 16, 16);
+            const head = new THREE.Mesh(headGeo, furMat);
+            head.position.y = 0.7;
+            head.castShadow = true;
+            catGroup.add(head);
+            const earGeo = new THREE.ConeGeometry(0.1, 0.15, 16);
+            const leftEar = new THREE.Mesh(earGeo, furMat);
+            leftEar.position.set(-0.15, 0.85, 0); leftEar.rotation.x = -0.5;
+            catGroup.add(leftEar);
+            const rightEar = new THREE.Mesh(earGeo, furMat);
+            rightEar.position.set(0.15, 0.85, 0); rightEar.rotation.x = -0.5;
+            catGroup.add(rightEar);
+            const tailGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.3);
+            const tail = new THREE.Mesh(tailGeo, furMat);
+            tail.position.set(0, 0.6, -0.3);
+            tail.rotation.x = Math.PI / 2;
+            catGroup.add(tail);
+            return catGroup;
+        }
+
+        // --- WORLD GENERATION ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.Fog(0x87CEEB, 15, 60);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        document.body.appendChild(renderer.domElement);
+
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(30, 60, 30);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        scene.add(dirLight);
+
+        const groundGeo = new THREE.PlaneGeometry(150, 150);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0x3E2723, roughness: 1 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        function createTree(x, z) {
+            const group = new THREE.Group();
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 3, 8), new THREE.MeshStandardMaterial({ color: 0x4E342E }));
+            trunk.position.y = 1.5; trunk.castShadow = true; group.add(trunk);
+            const leavesMat = new THREE.MeshStandardMaterial({ color: 0x1B5E20 });
+            const l1 = new THREE.Mesh(new THREE.ConeGeometry(1.5, 2, 8), leavesMat); l1.position.y = 3.5; group.add(l1);
+            const l2 = new THREE.Mesh(new THREE.ConeGeometry(1.2, 2, 8), leavesMat); l2.position.y = 4.5; group.add(l2);
+            const l3 = new THREE.Mesh(new THREE.ConeGeometry(0.8, 1.5, 8), leavesMat); l3.position.y = 5.5; group.add(l3);
+            group.position.set(x, 0, z);
+            scene.add(group);
+        }
+        for(let i=0; i<60; i++) {
+            const angle = Math.random() * Math.PI * 2; const radius = 15 + Math.random() * 30;
+            createTree(Math.cos(angle) * radius, Math.sin(angle) * radius);
+        }
+
+        const plots = [];
+        const plotGeo = new THREE.BoxGeometry(1.9, 0.3, 1.9);
+        const soilMat = new THREE.MeshStandardMaterial({ color: 0x5D4037 });
+        const plantGeo = new THREE.SphereGeometry(0.3, 8, 8);
+        const plantMatNormal = new THREE.MeshStandardMaterial({ color: 0x4CAF50 });
+        const plantMatGold = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+
+        for(let x = -3; x <= 3; x++) {
+            for(let z = -3; z <= 3; z++) {
+                const plot = new THREE.Mesh(plotGeo, soilMat);
+                plot.position.set(x * 2, 0.15, z * 2);
+                plot.receiveShadow = true;
+                plot.userData = { isPlot: true, hasPlant: false, growth: 0, type: 'normal', plantMesh: null };
+                scene.add(plot);
+                plots.push(plot);
+            }
+        }
+
+        // --- GEDUNG TOKO ---
+        const shopGroup = new THREE.Group();
+        const woodMat = new THREE.MeshStandardMaterial({ color: 0x5D4037 });
+        const floor = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 8), woodMat);
+        floor.position.set(0, 0.25, -12);
+        shopGroup.add(floor);
+        const wall = new THREE.Mesh(new THREE.BoxGeometry(16, 4, 0.5), woodMat);
+        wall.position.set(0, 2.25, -16.5);
+        shopGroup.add(wall);
+        const roof = new THREE.Mesh(new THREE.ConeGeometry(8, 3, 4), new THREE.MeshStandardMaterial({color: 0x3E2723}));
+        roof.position.set(0, 5.5, -12);
+        roof.rotation.y = Math.PI / 4;
+        shopGroup.add(roof);
+
+        const npc1 = createRobloxChar(0xD7CCC8, 0xFFCCBC, 'farmer');
+        npc1.position.set(-5, 0, -13);
+        npc1.userData = { type: 'npc', role: 'farmer' };
+        shopGroup.add(npc1);
+        
+        const npc2 = createRobloxChar(0xFFD700, 0xFFCCBC, 'merchant');
+        npc2.position.set(-1.5, 0, -13);
+        npc2.userData = { type: 'npc', role: 'merchant' };
+        shopGroup.add(npc2);
+        
+        const npc3 = createRobloxChar(0xFBC02D, 0xFFCCBC, 'assist');
+        npc3.position.set(2, 0, -13);
+        npc3.userData = { type: 'npc', role: 'assist' };
+        shopGroup.add(npc3);
+        
+        const npc4 = createRobloxChar(0x000000, 0xFFCCBC, 'redeem');
+        npc4.position.set(5.5, 0, -13);
+        npc4.userData = { type: 'npc', role: 'redeem' };
+        shopGroup.add(npc4);
+
+        scene.add(shopGroup);
+
+        const player = createRobloxChar(0xE91E63, 0xFFCCBC, null);
+        player.position.set(0, 0, 5);
+        scene.add(player);
+
+        const pet = createCat();
+        scene.add(pet);
+
+        // --- UI LOGIC ---
+        function updateUI() {
+            document.getElementById('money-val').innerText = Math.floor(money);
+            window.money = money;
+            document.getElementById('count-0').innerText = inventory.seed_normal;
+            document.getElementById('count-1').innerText = inventory.crop;
+            document.getElementById('count-2').innerText = inventory.seed_gold;
+        }
+
+        window.closeShop = function() {
+            document.getElementById('shop-modal').style.display = 'none';
+            document.getElementById('redeem-section').style.display = 'none';
+            isShopOpen = false;
+            currentInteractable = null;
+        };
+
+        window.openShop = function(type) {
+            isShopOpen = true;
+            const modal = document.getElementById('shop-modal');
+            const title = document.getElementById('shop-title');
+            const list = document.getElementById('shop-items');
+            const redeemSec = document.getElementById('redeem-section');
             
-            adminPanel.classList.remove('hidden');
-            codeList.innerHTML = "Mengambil data...";
+            list.innerHTML = '';
+            document.getElementById('code-result').innerText = '';
+            document.getElementById('code-result').style.color = "#333";
+            document.getElementById('btn-copy-code').innerText = " TUNGGU...";
+            document.getElementById('btn-copy-code').disabled = true;
+            document.getElementById('copy-status').innerText = "";
+            redeemSec.style.display = 'none';
 
-            try {
-                const snapshot = await get(ref(db, 'codes'));
-                codeList.innerHTML = ""; 
+            if (type === 'farmer') {
+                title.innerText = "TOKO PETERNAK";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Bibit Wortel (10)</span><button class="btn-buy" id="btn-seed-buy">BELI (50)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-seed-buy').onclick = function() {
+                    if(money >= 50) { money -= 50; inventory.seed_normal += 10; updateUI(); } 
+                    else { alert("Uang tidak cukup!"); }
+                };
+                const sellItem = document.createElement('div');
+                sellItem.className = 'shop-item';
+                sellItem.innerHTML = `<span>Jual Wortel (All)</span><button class="btn-buy" id="btn-sell-crops">JUAL</button>`;
+                list.appendChild(sellItem);
+                document.getElementById('btn-sell-crops').onclick = function() {
+                    if(inventory.crop > 0) { money += inventory.crop * 20; inventory.crop = 0; updateUI(); }
+                };
 
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const keys = Object.keys(data);
-                    
-                    if (keys.length === 0) {
-                        codeList.innerHTML = "<p>Belum ada kode.</p>";
-                    } else {
-                        keys.forEach(key => {
-                            const item = document.createElement('div');
-                            item.className = 'admin-code-item';
-                            item.innerText = key;
-                            item.onclick = () => copyCodeToClipboard(key);
-                            codeList.appendChild(item);
+            } else if (type === 'merchant') {
+                title.innerText = "MERCHANT MAHAL";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Bibit Emas Premium (1)</span><button class="btn-buy btn-gold" id="btn-gold-buy">BELI (500)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-gold-buy').onclick = function() {
+                    if(money >= 500) { money -= 500; inventory.seed_gold += 1; updateUI(); } 
+                    else { alert("Uang tidak cukup!"); }
+                };
+
+            } else if (type === 'assist') {
+                title.innerText = "ROBOT TANI";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Jasa Robot (Tanam & Panen)</span><button class="btn-buy btn-robot" id="btn-hire-robot">SEWA (300)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-hire-robot').onclick = function() {
+                    if(money >= 300) {
+                        money -= 300; updateUI();
+                        let plotsModified = 0;
+                        plots.forEach(plot => {
+                            if (plot.userData.hasPlant && plot.userData.growth >= 100) {
+                                inventory.crop += 5;
+                                plot.userData.hasPlant = false; plot.userData.growth = 0;
+                                if(plot.userData.plantMesh) { plot.remove(plot.userData.plantMesh); plot.userData.plantMesh = null; }
+                                plotsModified++;
+                            } else if (!plot.userData.hasPlant) {
+                                let planted = false;
+                                if (inventory.seed_normal > 0) { inventory.seed_normal--; planted = 'normal'; }
+                                else if (inventory.seed_gold > 0) { inventory.seed_gold--; planted = 'gold'; }
+                                if(planted) {
+                                    plot.userData.hasPlant = true; plot.userData.growth = 0; plot.userData.type = planted;
+                                    const pMat = planted === 'normal' ? plantMatNormal : plantMatGold;
+                                    const mesh = new THREE.Mesh(plantGeo, pMat);
+                                    mesh.position.set(0, 0.3, 0); mesh.scale.set(0.1, 0.1, 0.1);
+                                    plot.add(mesh); plot.userData.plantMesh = mesh;
+                                    plotsModified++;
+                                }
+                            }
                         });
-                    }
-                } else {
-                    codeList.innerHTML = "<p>Database Kosong.</p>";
-                }
-            } catch (error) {
-                console.error(error);
-                codeList.innerHTML = "<p style='color:red'>Gagal memuat.</p>";
+                        updateUI(); alert(`Robot bekerja! ${plotsModified} lahan diproses.`);
+                    } else { alert("Uang tidak cukup!"); }
+                };
+
+            } else if (type === 'redeem') {
+                title.innerText = "REDEEM CENTER";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Buka Website Redeem</span><button class="btn-buy btn-link" id="btn-go-redeem">BUKA LINK</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-go-redeem').onclick = function() {
+                    window.open('https://knighttora-sketch.github.io/Cokiredeem/', '_blank');
+                };
+                redeemSec.style.display = 'block';
             }
+
+            modal.style.display = 'flex';
         };
 
-        window.closeAdminPanel = function() {
-            document.getElementById('admin-panel').classList.add('hidden');
+        // --- MANUAL COPY BUTTON ---
+        document.getElementById('btn-copy-code').addEventListener('click', () => {
+            const resDiv = document.getElementById('code-result');
+            // Fallback lama namun lebih robust: Select Text
+            const range = document.createRange();
+            range.selectNode(resDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
             
-            // Saat menutup admin, kita berikan bypass cooldown (Mode Admin)
-            window.isAdminMode = true; 
-            
-            // Reset tombol
-            startBtn.innerText = "MULAI";
-            startBtn.classList.remove('hack-btn');
-            startBtn.onclick = startGameSequence;
-            startBtn.disabled = false; // Pastikan enabled
-            
-            inputField.value = "";
-            inputField.classList.remove('admin-active');
-            
-            // Refresh status
-            window.checkPlayEligibility();
-        };
-
-        // --- FITUR: RESET COOLDOWN ---
-        window.resetCooldown = function() {
-            localStorage.removeItem('neon_game_last_play');
-            showToast("Cooldown Berhasil Direset!");
-            // Tutup panel untuk refresh UI
-            closeAdminPanel();
-        };
-
-        async function copyCodeToClipboard(text) {
+            // Coba eksekusi perintah copy
             try {
-                await navigator.clipboard.writeText(text);
-                showToast(`Kode ${text} Tersalin!`);
+                document.execCommand('copy');
+                document.getElementById('copy-status').innerText = "Teks terpilih! Paste manual (Ctrl+V).";
+                setTimeout(() => document.getElementById('copy-status').innerText = "", 3000);
             } catch (err) {
-                showToast("Gagal menyalin");
+                document.getElementById('copy-status').innerText = "Silakan blok teks manual.";
             }
-        }
+        });
 
-        function showToast(message) {
-            const toast = document.getElementById('toast-notification');
-            toast.innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
+        // --- BUY & AUTO COPY LOGIC ---
+        document.getElementById('btn-buy-code').addEventListener('click', () => {
+            const resDiv = document.getElementById('code-result');
+            const btnCopy = document.getElementById('btn-copy-code');
+            const statusDiv = document.getElementById('copy-status');
+            
+            resDiv.innerText = "Mengambil...";
+            resDiv.style.color = "#333";
+            btnCopy.disabled = true;
+            btnCopy.innerText = " TUNGGU...";
+            statusDiv.innerText = "";
+            
+            if(money >= 100) {
+                if (!db) { 
+                    resDiv.innerText = "Error: DB Offline"; 
+                    resDiv.style.color = "red";
+                    btnCopy.disabled = false;
+                    btnCopy.innerText = " COBA LAGI";
+                    return; 
+                }
 
-        // ==========================================
-        // 2. SISTEM GAME (PERBAIKAN LOGIKA COOLDOWN)
-        // ==========================================
-
-        function generateUniqueId() {
-            return Math.random().toString(36).substring(2, 10).toUpperCase();
-        }
-
-        // Fungsi ini dipanggil saat load, saat input berubah, dan saat admin tutup
-        window.checkPlayEligibility = function() {
-            const lastPlayTime = localStorage.getItem('neon_game_last_play');
-            const playerUniqueId = localStorage.getItem('neon_game_uid');
-            const now = Date.now();
-            const cooldownMs = 24 * 60 * 60 * 1000; 
-            const uidDisplay = document.getElementById('uid-display');
-            const cooldownMsg = document.getElementById('cooldown-msg');
-
-            // Tampilkan UID
-            if(playerUniqueId) uidDisplay.innerText = `ID PEMAIN: ${playerUniqueId}`;
-
-            // PERBAIKAN: Jika tombol sedang menampilkan teks Admin, JANGAN ubah state tombol
-            if (startBtn.innerText === "OPEN ADMIN PANEL") {
-                // Biarkan tombol admin tetap ada, abaikan logika cooldown untuk tombol ini
-                return; 
-            }
-
-            // Jika Admin Mode aktif (setelah tutup panel), bypass cooldown
-            if (window.isAdminMode) {
-                startBtn.disabled = false;
-                startBtn.innerText = "MULAI";
-                cooldownMsg.style.display = 'none';
-                return true; 
-            }
-
-            // Logika Cooldown Normal
-            if (lastPlayTime && now - lastPlayTime < cooldownMs) {
-                startBtn.disabled = true;
-                startBtn.innerText = "COOLDOWN";
-                const remaining = cooldownMs - (now - lastPlayTime);
-                const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const codesRef = ref(db, 'codes');
                 
-                cooldownMsg.style.display = 'block';
-                cooldownMsg.innerText = `Kembali dalam ${hours} jam ${minutes} menit.`;
-                return false; 
-            } else {
-                startBtn.disabled = false;
-                startBtn.innerText = "MULAI";
-                cooldownMsg.style.display = 'none';
-                return true;
-            }
-        };
-
-        window.prepareGameData = function(callback) {
-            let uid = localStorage.getItem('neon_game_uid');
-            if (!uid) {
-                uid = generateUniqueId();
-                localStorage.setItem('neon_game_uid', uid);
-            }
-            document.getElementById('uid-display').innerText = `ID PEMAIN: ${uid}`;
-            const playerPath = `codes/${uid}`;
-            set(ref(db, `${playerPath}/active`), true);
-            callback(playerPath);
-        };
-
-        window.syncRedeemCode = function(elementId, path) {
-            const codeRef = ref(db, path);
-            onValue(codeRef, (snapshot) => {
-                const htmlElement = document.getElementById(elementId);
-                if (htmlElement) {
+                get(codesRef).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        if (data && (data.active !== false || data.cookieRaw)) {
-                            htmlElement.innerText = path.split('/')[1]; 
-                            htmlElement.style.color = "#0f0";
-                            const copyBtn = document.getElementById('copy-btn');
-                            if(copyBtn) {
-                                copyBtn.style.display = 'inline-block';
-                                copyBtn.onclick = () => copyCodeToClipboard(htmlElement.innerText);
+                        const keys = Object.keys(data);
+                        
+                        if (keys.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * keys.length);
+                            const selectedKey = keys[randomIndex];
+                            
+                            money -= 500;
+                            updateUI();
+                            currentCode = selectedKey;
+
+                            resDiv.innerText = selectedKey;
+                            resDiv.style.color = "green";
+                            resDiv.style.fontWeight = "bold";
+                            resDiv.style.fontSize = "20px";
+                            
+                            // 1. COBA AUTO COPY (SILENT)
+                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                navigator.clipboard.writeText(selectedKey).then(() => {
+                                    statusDiv.innerText = " Otomatis Disalin!";
+                                    btnCopy.innerText = " DISALIN!";
+                                    btnCopy.disabled = true;
+                                }).catch(err => {
+                                    console.warn("Auto copy gagal, siapkan tombol manual:", err);
+                                    // Jika auto gagal, aktifkan tombol manual
+                                    btnCopy.innerText = " SALIN MANUAL";
+                                    btnCopy.disabled = false;
+                                    statusDiv.innerText = "Auto copy gagal. Tekan tombol di bawah.";
+                                });
+                            } else {
+                                // Jika API tidak support (HTTP vs HTTPS), gunakan tombol manual
+                                btnCopy.innerText = " SALIN MANUAL";
+                                btnCopy.disabled = false;
+                                statusDiv.innerText = "Browser tidak support auto-copy. Gunakan tombol manual.";
+                            }
+
+                        } else {
+                            resDiv.innerText = "Stok Kode HABIS!";
+                            resDiv.style.color = "red";
+                            btnCopy.disabled = true;
+                            btnCopy.innerText = " KOSONG";
+                        }
+                    } else {
+                        resDiv.innerText = "Database 'codes' Kosong!";
+                        resDiv.style.color = "red";
+                        btnCopy.disabled = true;
+                        btnCopy.innerText = " ERROR";
+                    }
+                }).catch((error) => {
+                    resDiv.innerText = "Error Koneksi!";
+                    resDiv.style.color = "red";
+                    console.error("Error Koneksi:", error);
+                    btnCopy.disabled = false;
+                    btnCopy.innerText = " COBA LAGI";
+                });
+
+            } else {
+                alert("Butuh 500 Uang!");
+            }
+        });
+
+        document.getElementById('btn-close-shop').addEventListener('click', window.closeShop);
+
+        // --- GAME LOGIC & LOOP ---
+
+        function doAction() {
+            if (isShopOpen) return;
+
+            if (currentInteractable) {
+                if (currentInteractable.userData.isPlot) {
+                    const plot = currentInteractable;
+                    if (!plot.userData.hasPlant) {
+                        let seedType = null;
+                        if (inventory.seed_normal > 0) { inventory.seed_normal--; seedType = 'normal'; }
+                        else if (inventory.seed_gold > 0) { inventory.seed_gold--; seedType = 'gold'; }
+
+                        if (seedType) {
+                            plot.userData.hasPlant = true; plot.userData.growth = 0; plot.userData.type = seedType;
+                            const pMat = seedType === 'normal' ? plantMatNormal : plantMatGold;
+                            const mesh = new THREE.Mesh(plantGeo, pMat);
+                            mesh.position.set(0, 0.3, 0); mesh.scale.set(0.1, 0.1, 0.1);
+                            plot.add(mesh); plot.userData.plantMesh = mesh;
+                            updateUI();
+                        } else { alert("Tidak punya bibit!"); }
+                    } else {
+                        if (plot.userData.growth >= 100) {
+                            if (plot.userData.type === 'normal') inventory.crop += 5;
+                            else if (plot.userData.type === 'gold') { inventory.crop += 5; money += 150; }
+                            plot.userData.hasPlant = false; plot.userData.growth = 0;
+                            if(plot.userData.plantMesh) { plot.remove(plot.userData.plantMesh); plot.userData.plantMesh = null; }
+                            updateUI();
+                        } else { alert("Belum siap panen!"); }
+                    }
+                } else if (currentInteractable.userData.type === 'npc') {
+                    window.openShop(currentInteractable.userData.role);
+                }
+            }
+        }
+
+        // Setup Controls
+        const btnUp = document.getElementById('btn-up');
+        const btnDown = document.getElementById('btn-down');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        const btnAction = document.getElementById('btn-action');
+
+        const handleKey = (code, state) => {
+            if(code === 'ArrowUp' || code === 'KeyW') keys.w = state;
+            if(code === 'ArrowDown' || code === 'KeyS') keys.s = state;
+            if(code === 'ArrowLeft' || code === 'KeyA') keys.a = state;
+            if(code === 'ArrowRight' || code === 'KeyD') keys.d = state;
+            if(code === 'Space') {
+                if(state && !keys.action) doAction();
+                keys.action = state;
+            }
+        };
+
+        window.addEventListener('keydown', (e) => handleKey(e.code, true));
+        window.addEventListener('keyup', (e) => handleKey(e.code, false));
+
+        const addTouch = (elem, key) => {
+            elem.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
+            elem.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = false; });
+        };
+        addTouch(btnUp, 'w');
+        addTouch(btnDown, 's');
+        addTouch(btnLeft, 'a');
+        addTouch(btnRight, 'd');
+        
+        btnAction.addEventListener('touchstart', (e) => { 
+            e.preventDefault(); 
+            doAction(); 
+        });
+
+        // --- START GAME BUTTON ---
+        const startBtn = document.getElementById('btn-start');
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("Start button ditekan!");
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('ui-layer').style.display = 'block';
+            gameStarted = true;
+            
+            const targetCamPos = new THREE.Vector3().copy(player.position).add(camOffset);
+            camera.position.copy(targetCamPos);
+            camera.lookAt(player.position);
+        });
+
+        // --- GAME LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (!gameStarted) {
+                renderer.render(scene, camera);
+                return;
+            }
+
+            if (!isShopOpen) {
+                let dx = 0; let dz = 0;
+                if (keys.w) dz -= playerSpeed;
+                if (keys.s) dz += playerSpeed;
+                if (keys.a) dx -= playerSpeed;
+                if (keys.d) dx += playerSpeed;
+
+                if (dx !== 0 || dz !== 0) {
+                    isMoving = true;
+                    player.position.x += dx;
+                    player.position.z += dz;
+                    
+                    targetRotation = Math.atan2(dx, dz);
+                    player.rotation.y = targetRotation;
+
+                    const time = Date.now() * 0.01;
+                    player.userData.leftLeg.rotation.x = Math.sin(time) * 0.5;
+                    player.userData.rightLeg.rotation.x = Math.sin(time + Math.PI) * 0.5;
+                    player.userData.leftArm.rotation.x = Math.sin(time + Math.PI) * 0.5;
+                    player.userData.rightArm.rotation.x = Math.sin(time) * 0.5;
+
+                    const dist = player.position.distanceTo(pet.position);
+                    if (dist > 3) {
+                        pet.position.x += (player.position.x - pet.position.x) * 0.05;
+                        pet.position.z += (player.position.z - pet.position.z) * 0.05;
+                        pet.lookAt(player.position);
+                    }
+                } else {
+                    isMoving = false;
+                    player.userData.leftLeg.rotation.x = 0;
+                    player.userData.rightLeg.rotation.x = 0;
+                }
+
+                const targetCamPos = new THREE.Vector3().copy(player.position).add(camOffset);
+                camera.position.lerp(targetCamPos, 0.1);
+                camera.lookAt(player.position);
+
+                let foundInteract = null;
+                let minDist = 2.5;
+
+                plots.forEach(plot => {
+                    const d = player.position.distanceTo(plot.position);
+                    if (d < minDist) {
+                        minDist = d;
+                        foundInteract = plot;
+                    }
+                });
+
+                shopGroup.children.forEach(child => {
+                    if(child.userData.type === 'npc') {
+                        const d = player.position.distanceTo(child.position);
+                        if (d < minDist) {
+                            minDist = d;
+                            foundInteract = child;
+                        }
+                    }
+                });
+
+                currentInteractable = foundInteract;
+                const msg = document.getElementById('interact-msg');
+                if (currentInteractable) {
+                    msg.style.display = 'block';
+                    if(currentInteractable.userData.isPlot) {
+                        msg.innerText = currentInteractable.userData.hasPlant ? "PANEN" : "TANAM";
+                    } else {
+                        msg.innerText = "TOKO " + currentInteractable.userData.role.toUpperCase();
+                    }
+                } else {
+                    msg.style.display = 'none';
+                }
+
+                plots.forEach(plot => {
+                    if (plot.userData.hasPlant && plot.userData.growth < 100) {
+                        plot.userData.growth += 0.05;
+                        if (plot.userData.plantMesh) {
+                            const scale = 0.1 + (plot.userData.growth / 100) * 0.9;
+                            plot.userData.plantMesh.scale.set(scale, scale, scale);
+                            if(plot.userData.growth >= 100) {
+                                plot.userData.plantMesh.material.color.setHex(0xFF9800);
                             }
                         }
                     }
-                }
-            });
-        };
-
-    </script>
-
-    <style>
-        :root {
-            --primary-color: #0ff;
-            --danger-color: #f0f;
-            --bg-color: #050510;
-            --text-color: #fff;
-            --hack-border: #ef4444;
-            --warn-color: #fbbf24;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
-        body {
-            font-family: sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        #game-container {
-            position: relative;
-            width: 100%; max-width: 600px;
-            height: 100%; max-height: 800px;
-            background: radial-gradient(circle at bottom, #1a1a2e 0%, #000 100%);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-            overflow: hidden; border: 2px solid #333;
-        }
-        canvas { display: block; width: 100%; height: 100%; }
-        
-        .ui-layer {
-            position: absolute; top: 0; left: 0; width: 100%; padding: 15px;
-            display: flex; justify-content: space-between;
-            pointer-events: none; z-index: 10; font-weight: bold; font-size: 1.2rem;
-            text-shadow: 0 0 5px var(--primary-color);
-        }
-        .modal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 20; text-align: center; padding: 20px; backdrop-filter: blur(5px);
-        }
-        .hidden { display: none !important; }
-        h1 { color: var(--primary-color); margin-bottom: 20px; font-size: 2.5rem; }
-        #uid-display { font-size: 0.8rem; color: #888; margin-bottom: 10px; }
-        #cooldown-msg { color: #f55; font-weight: bold; margin-top: 10px; display: none; }
-
-        #secret-input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #333;
-            color: transparent;
-            text-shadow: 0 0 0 transparent;
-            caret-color: transparent;
-            width: 200px;
-            text-align: center;
-            margin-bottom: 20px;
-            outline: none;
-        }
-        #secret-input.admin-active { border-bottom: 1px solid var(--hack-border); }
-
-        #admin-panel {
-            z-index: 50;
-            background: rgba(10, 0, 0, 0.95);
-            border: 1px solid var(--hack-border);
-        }
-        .admin-header {
-            width: 100%; display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 15px; border-bottom: 1px solid var(--hack-border); margin-bottom: 15px;
-        }
-        .admin-header h3 { color: var(--hack-border); margin: 0; }
-        .close-admin {
-            background: transparent; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer;
-        }
-        
-        #admin-code-list {
-            width: 100%; height: 300px; max-height: 50vh; overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;
-            scrollbar-width: thin; scrollbar-color: var(--hack-border) #111;
-        }
-        #admin-code-list::-webkit-scrollbar { width: 8px; }
-        #admin-code-list::-webkit-scrollbar-track { background: #111; }
-        #admin-code-list::-webkit-scrollbar-thumb { background-color: var(--hack-border); border-radius: 4px; }
-
-        .admin-code-item {
-            background: #1a1a1a; border: 1px solid #333; padding: 15px;
-            border-radius: 5px; cursor: pointer; font-family: monospace; font-weight: bold;
-            color: var(--primary-color); transition: 0.2s; min-width: 0; word-break: break-all;
-        }
-        .admin-code-item:active { background: var(--hack-border); color: white; }
-
-        .reset-cooldown-btn {
-            width: 100%; margin-top: 15px; background: var(--warn-color); color: #000;
-            border: none; padding: 12px; border-radius: 5px; font-weight: bold;
-            cursor: pointer; font-size: 1rem;
-        }
-        .reset-cooldown-btn:active { opacity: 0.8; }
-
-        .reward-box {
-            background: rgba(255,255,255,0.1); border: 2px solid #fff;
-            padding: 20px; border-radius: 10px; margin: 20px 0;
-            width: 90%; max-width: 350px;
-        }
-        #live-code-display {
-            font-family: 'Courier New', monospace; font-size: 1.8rem;
-            font-weight: bold; margin-top: 10px; color: #fff;
-            text-transform: uppercase; letter-spacing: 2px;
-        }
-        
-        button {
-            padding: 15px 30px; font-size: 1.2rem; cursor: pointer;
-            background: var(--primary-color); border: none; color: #000;
-            font-weight: bold; border-radius: 5px; text-transform: uppercase;
-            margin-top: 10px;
-        }
-        button:disabled { background: #444; color: #888; cursor: not-allowed; }
-        button:hover:not(:disabled) { background: #fff; }
-        button.hack-btn {
-            background: var(--hack-border); color: white;
-            animation: pulse-red 1.5s infinite;
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        button.copy-btn {
-            padding: 8px 15px; font-size: 0.9rem; background: #444; color: white; margin-left: 10px; display: none;
-        }
-
-        #toast-notification {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: #fff; color: #000; padding: 10px 20px; border-radius: 20px;
-            font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-            z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        #toast-notification.show { opacity: 1; }
-
-        .mobile-controls {
-            position: absolute; bottom: 20px; left: 0; width: 100%; height: 100px;
-            padding: 0 20px; display: none; justify-content: space-between; z-index: 15;
-        }
-        .touch-btn {
-            width: 70px; height: 70px; background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.5); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 24px;
-            user-select: none; pointer-events: auto;
-        }
-        .touch-group { display: flex; gap: 20px; pointer-events: auto; }
-        @media (hover: none) and (pointer: coarse) { .mobile-controls { display: flex; } }
-    </style>
-</head>
-<body onload="window.checkPlayEligibility()">
-
-    <div id="game-container">
-        <!-- UI -->
-        <div class="ui-layer">
-            <div id="score-display">SKOR: 0</div>
-        </div>
-
-        <canvas id="gameCanvas"></canvas>
-
-        <!-- Mobile Controls -->
-        <div class="mobile-controls">
-            <div class="touch-group">
-                <div class="touch-btn" id="btn-left">←</div>
-                <div class="touch-btn" id="btn-right">→</div>
-            </div>
-            <div class="touch-btn" id="btn-fire">🔥</div>
-        </div>
-
-        <!-- Start Screen -->
-        <div id="start-screen" class="modal">
-            <h1>Neon Sync</h1>
-            <div id="uid-display">MEMUAT ID...</div>
-            <input type="text" id="secret-input" placeholder=" " autocomplete="off">
-            <p>Capai skor 50 untuk dapatkan kode unik Anda.</p>
-            <div id="cooldown-msg"></div>
-            <button id="start-btn" onclick="startGameSequence()">MULAI</button>
-        </div>
-
-        <!-- ADMIN PANEL OVERLAY -->
-        <div id="admin-panel" class="modal hidden">
-            <div class="admin-header">
-                <h3>ADMIN ACCESS</h3>
-                <button class="close-admin" onclick="closeAdminPanel()">CLOSE</button>
-            </div>
-            <p style="font-size: 0.8rem; color:#aaa; margin-bottom:10px;">Tap code to copy</p>
-            
-            <div id="admin-code-list"></div>
-
-            <button class="reset-cooldown-btn" onclick="resetCooldown()">RESET COOLDOWN</button>
-        </div>
-
-        <!-- Reward Screen -->
-        <div id="reward-screen" class="modal hidden">
-            <h1>MISI SUKSES!</h1>
-            <p>Kode Unik Anda:</p>
-            <div class="reward-box">
-                <div id="live-code-display">Processing...</div>
-                <button id="copy-btn" class="copy-btn">SALIN</button>
-            </div>
-            <p>Simpan kode ini dengan baik!</p>
-            <button id="play-again-btn" onclick="location.reload()">KEMBALI KE MENU</button>
-        </div>
-
-        <!-- Game Over -->
-        <div id="game-over-screen" class="modal hidden">
-            <h2>GAME OVER</h2>
-            <p>Skor: <span id="final-score">0</span></p>
-            <button onclick="location.reload()">KEMBALI KE MENU</button>
-        </div>
-
-        <div id="toast-notification"></div>
-    </div>
-
-    <script type="module">
-        // --- LOGIKA GAME ---
-        
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let gameRunning = false;
-        let score = 0;
-        let lastTime = 0;
-        let keys = { ArrowLeft: false, ArrowRight: false, a: false, d: false, Space: false };
-        let currentPlayerPath = ""; 
-
-        function resize() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
-        window.addEventListener('resize', resize); resize();
-
-        window.startGameSequence = function() {
-            if(!window.isAdminMode && !window.checkPlayEligibility()) return; 
-            
-            window.prepareGameData((path) => {
-                currentPlayerPath = path;
-                initGame();
-            });
-        };
-
-        class Player {
-            constructor() {
-                this.w = 40; this.h = 40; this.x = canvas.width/2-20; this.y = canvas.height-60; this.speed = 400; this.bullets = [];
-            }
-            update(dt) {
-                if((keys.ArrowLeft||keys.a) && this.x>0) this.x -= this.speed*dt;
-                if((keys.ArrowRight||keys.d) && this.x<canvas.width-this.w) this.x += this.speed*dt;
-                if(keys.Space && this.bullets.length<5) {
-                    this.bullets.push({x: this.x+this.w/2, y: this.y, marked:false});
-                    keys.Space = false; 
-                }
-            }
-            draw(ctx) {
-                ctx.fillStyle = '#0ff'; ctx.beginPath();
-                ctx.moveTo(this.x+20, this.y); ctx.lineTo(this.x+40, this.y+40); ctx.lineTo(this.x, this.y+40); ctx.fill();
-            }
-        }
-        class Enemy {
-            constructor() {
-                this.w = 30; this.h = 30; this.x = Math.random()*(canvas.width-30); this.y = -30; this.speed = 200;
-            }
-            update(dt) { this.y += this.speed*dt; }
-            draw(ctx) { ctx.fillStyle = '#f0f'; ctx.fillRect(this.x, this.y, this.w, this.h); }
-        }
-
-        let player, enemies = [], bullets = [];
-
-        function initGame() {
-            player = new Player(); enemies = []; bullets = []; score = 0;
-            document.getElementById('score-display').innerText = "SKOR: 0";
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-over-screen').classList.add('hidden');
-            document.getElementById('reward-screen').classList.add('hidden');
-            
-            document.getElementById('live-code-display').innerText = "Menunggu...";
-            document.getElementById('live-code-display').style.color = "#fff";
-            
-            gameRunning = true; lastTime = performance.now();
-            requestAnimationFrame(loop);
-        }
-
-        function loop(now) {
-            if(!gameRunning) return;
-            let dt = (now - lastTime)/1000; lastTime = now;
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-
-            player.update(dt); player.draw(ctx);
-            
-            player.bullets.forEach(b => { b.y -= 600*dt; if(b.y<0) b.marked=true; });
-            player.bullets = player.bullets.filter(b => !b.marked);
-            player.bullets.forEach(b => { ctx.fillStyle='#ff0'; ctx.fillRect(b.x-2, b.y, 4, 15); });
-
-            if(Math.random()<0.02) enemies.push(new Enemy());
-            enemies.forEach(e => { e.update(dt); e.draw(ctx); });
-
-            player.bullets.forEach(b => {
-                enemies.forEach(e => {
-                    if(b.x>e.x && b.x<e.x+e.w && b.y>e.y && b.y<e.y+e.h && !e.marked) {
-                        e.marked=true; b.marked=true; score+=10;
-                        document.getElementById('score-display').innerText = "SKOR: "+score;
-                        if(score >= 50) showReward();
-                    }
                 });
-            });
-            
-            enemies.forEach(e => {
-                if(e.y > canvas.height-50 && !e.marked) { endGame(); }
-            });
-            
-            enemies = enemies.filter(e => !e.marked);
-            requestAnimationFrame(loop);
+            }
+
+            renderer.render(scene, camera);
         }
 
-        function endGame() {
-            gameRunning = false;
-            document.getElementById('game-over-screen').classList.remove('hidden');
-            document.getElementById('final-score').innerText = score;
-        }
-
-        function showReward() {
-            gameRunning = false;
-            localStorage.setItem('neon_game_last_play', Date.now());
-            document.getElementById('reward-screen').classList.remove('hidden');
-            window.syncRedeemCode('live-code-display', currentPlayerPath);
-        }
-
-        // Controls
-        window.addEventListener('keydown', e => {
-            if(e.code==='Space') keys.Space=true;
-            if(e.key==='ArrowLeft') keys.ArrowLeft=true;
-            if(e.key==='ArrowRight') keys.ArrowRight=true;
-            if(e.key==='a'||e.key==='A') keys.a=true;
-            if(e.key==='d'||e.key==='D') keys.d=true;
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
-        window.addEventListener('keyup', e => {
-            if(e.code==='Space') keys.Space=false;
-            if(e.key==='ArrowLeft') keys.ArrowLeft=false;
-            if(e.key==='ArrowRight') keys.ArrowRight=false;
-            if(e.key==='a'||e.key==='A') keys.a=false;
-            if(e.key==='d'||e.key==='D') keys.d=false;
-        });
-
-        const addTouch = (el, k) => {
-            el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[k]=true; });
-            el.addEventListener('touchend', (e) => { e.preventDefault(); keys[k]=false; });
-        };
-        addTouch(document.getElementById('btn-left'), 'ArrowLeft');
-        addTouch(document.getElementById('btn-right'), 'ArrowRight');
-        addTouch(document.getElementById('btn-fire'), 'Space');
-
     </script>
 </body>
 </html>

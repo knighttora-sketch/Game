@@ -1,1 +1,857 @@
-<script>document.write(decodeURIComponent(escape(atob("PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImlkIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCwgbWF4aW11bS1zY2FsZT0xLjAsIHVzZXItc2NhbGFibGU9bm8iPgogICAgPHRpdGxlPkhhcnZlc3QgVmFsbGV5IC0gU21hcnQgQ29weTwvdGl0bGU+CiAgICA8c3R5bGU+CiAgICAgICAgYm9keSB7IG1hcmdpbjogMDsgb3ZlcmZsb3c6IGhpZGRlbjsgYmFja2dyb3VuZDogIzAwMDsgZm9udC1mYW1pbHk6ICdTZWdvZSBVSScsIHNhbnMtc2VyaWY7IHRvdWNoLWFjdGlvbjogbm9uZTsgdXNlci1zZWxlY3Q6IG5vbmU7IC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7IH0KICAgICAgICAKICAgICAgICAjbG9hZGVyIHsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOyB0b3A6IDA7IGxlZnQ6IDA7IHdpZHRoOiAxMDAlOyBoZWlnaHQ6IDEwMCU7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICMxYTJmMWE7IGNvbG9yOiAjZmZmOyBkaXNwbGF5OiBmbGV4OyBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyOyBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsgei1pbmRleDogOTk5OTk7IHBvaW50ZXItZXZlbnRzOiBhdXRvOwogICAgICAgIH0KICAgICAgICAjbG9hZGVyIGgxIHsgY29sb3I6ICM0Q0FGNTA7IG1hcmdpbi1ib3R0b206IDIwcHg7IHRleHQtc2hhZG93OiAycHggMnB4ICMwMDA7IHRleHQtYWxpZ246IGNlbnRlcjsgfQogICAgICAgICNsb2FkZXIgcCB7IGNvbG9yOiAjY2NjOyBmb250LXNpemU6IDE0cHg7IG1hcmdpbi1ib3R0b206IDMwcHg7IH0KICAgICAgICAKICAgICAgICAjYnRuLXN0YXJ0IHsKICAgICAgICAgICAgcGFkZGluZzogMjBweCA0MHB4OyBmb250LXNpemU6IDIwcHg7IGJhY2tncm91bmQ6ICM0Q0FGNTA7IGNvbG9yOiB3aGl0ZTsgCiAgICAgICAgICAgIGJvcmRlcjogbm9uZTsgYm9yZGVyLXJhZGl1czogMTBweDsgZm9udC13ZWlnaHQ6IGJvbGQ7IGN1cnNvcjogcG9pbnRlcjsgCiAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgNnB4IDEycHggcmdiYSgwLDAsMCwwLjUpOwogICAgICAgICAgICBwb2ludGVyLWV2ZW50czogYXV0byAhaW1wb3J0YW50OyBwb3NpdGlvbjogcmVsYXRpdmU7IHotaW5kZXg6IDEwMDAwMDsKICAgICAgICB9CiAgICAgICAgI2J0bi1zdGFydDphY3RpdmUgeyB0cmFuc2Zvcm06IHNjYWxlKDAuOTUpOyBiYWNrZ3JvdW5kOiAjMzg4RTNDOyB9CiAgICAgICAgCiAgICAgICAgI3VpLWxheWVyIHsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOyB0b3A6IDA7IGxlZnQ6IDA7IHdpZHRoOiAxMDAlOyBoZWlnaHQ6IDEwMCU7IHBvaW50ZXItZXZlbnRzOiBub25lOyB6LWluZGV4OiAxMDA7CiAgICAgICAgICAgIGRpc3BsYXk6IG5vbmU7CiAgICAgICAgfQogICAgICAgIAogICAgICAgIC5odWQtcGFuZWwgewogICAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNyk7IHBhZGRpbmc6IDhweDsgYm9yZGVyLXJhZGl1czogOHB4OwogICAgICAgICAgICBjb2xvcjogd2hpdGU7IG1hcmdpbjogMTBweDsgcG9pbnRlci1ldmVudHM6IGF1dG87IGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpOwogICAgICAgICAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDI1NSwyNTUsMjU1LDAuMik7CiAgICAgICAgfQoKICAgICAgICAjbW9uZXktZGlzcGxheSB7IHBvc2l0aW9uOiBhYnNvbHV0ZTsgdG9wOiAxMHB4OyByaWdodDogMTBweDsgZm9udC13ZWlnaHQ6IGJvbGQ7IGZvbnQtc2l6ZTogMThweDsgY29sb3I6ICNGRkQ3MDA7IHRleHQtc2hhZG93OiAxcHggMXB4ICMwMDA7IH0KICAgICAgICAKICAgICAgICAjaW52ZW50b3J5LWJveCB7CiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsgdG9wOiAxMHB4OyBsZWZ0OiAxMHB4OwogICAgICAgICAgICBkaXNwbGF5OiBncmlkOyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdCgzLCA0MHB4KTsgZ2FwOiA1cHg7CiAgICAgICAgfQogICAgICAgIC5pbnYtc2xvdCB7CiAgICAgICAgICAgIHdpZHRoOiA0MHB4OyBoZWlnaHQ6IDQwcHg7IGJhY2tncm91bmQ6IHJnYmEoMjU1LDI1NSwyNTUsMC4xKTsKICAgICAgICAgICAgYm9yZGVyOiAycHggc29saWQgIzU1NTsgYm9yZGVyLXJhZGl1czogNHB4OyBkaXNwbGF5OiBmbGV4OwogICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyOyBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsgZm9udC1zaXplOiAxMHB4OyBjb2xvcjogI2ZmZjsKICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOyBmb250LXdlaWdodDogYm9sZDsKICAgICAgICB9CiAgICAgICAgLmludi1jb3VudCB7IHBvc2l0aW9uOiBhYnNvbHV0ZTsgYm90dG9tOiAwOyByaWdodDogMDsgYmFja2dyb3VuZDogcmVkOyBib3JkZXItcmFkaXVzOiA1MCU7IHdpZHRoOiAxNHB4OyBoZWlnaHQ6IDE0cHg7IGZvbnQtc2l6ZTogOXB4OyBkaXNwbGF5OiBmbGV4OyBhbGlnbi1pdGVtczogY2VudGVyOyBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsgYm9yZGVyOiAxcHggc29saWQgd2hpdGU7IH0KCiAgICAgICAgI2ludGVyYWN0LW1zZyB7CiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsgYm90dG9tOiAzMCU7IGxlZnQ6IDUwJTsgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgMCk7CiAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMCwwLDAsMC44NSk7IGNvbG9yOiAjZmZmOyBwYWRkaW5nOiA4cHggMTZweDsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMjBweDsgZm9udC13ZWlnaHQ6IGJvbGQ7IGRpc3BsYXk6IG5vbmU7IHBvaW50ZXItZXZlbnRzOiBub25lOwogICAgICAgICAgICB6LWluZGV4OiAxMDE7IGJvcmRlcjogMXB4IHNvbGlkIHdoaXRlOyB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICAgICAgfQoKICAgICAgICAvKiBTSE9QIFVJICovCiAgICAgICAgI3Nob3AtbW9kYWwgewogICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7IHRvcDogNTAlOyBsZWZ0OiA1MCU7IHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIC01MCUpOwogICAgICAgICAgICB3aWR0aDogOTAlOyBtYXgtd2lkdGg6IDQyMHB4OyBiYWNrZ3JvdW5kOiAjZmZmOyBib3JkZXItcmFkaXVzOiAxMHB4OwogICAgICAgICAgICBwYWRkaW5nOiAyMHB4OyBkaXNwbGF5OiBub25lOyBmbGV4LWRpcmVjdGlvbjogY29sdW1uOyBhbGlnbi1pdGVtczogY2VudGVyOwogICAgICAgICAgICB6LWluZGV4OiAxMDAwOyBib3gtc2hhZG93OiAwIDEwcHggNDBweCByZ2JhKDAsMCwwLDAuOCk7CiAgICAgICAgICAgIHBvaW50ZXItZXZlbnRzOiBhdXRvOyB0b3VjaC1hY3Rpb246IG1hbmlwdWxhdGlvbjsKICAgICAgICB9CiAgICAgICAgI3Nob3AtbW9kYWwgaDIgeyBtYXJnaW4tdG9wOiAwOyBjb2xvcjogIzJFN0QzMjsgZm9udC1mYW1pbHk6ICdBcmlhbCBCbGFjaycsIHNhbnMtc2VyaWY7IGJvcmRlci1ib3R0b206IDJweCBzb2xpZCAjZGRkOyB3aWR0aDoxMDAlOyBwYWRkaW5nLWJvdHRvbToxMHB4OyB9CiAgICAgICAgLnNob3AtaXRlbSB7CiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7IGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2Vlbjsgd2lkdGg6IDEwMCU7IHBhZGRpbmc6IDEycHggMDsKICAgICAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlZWU7IGFsaWduLWl0ZW1zOiBjZW50ZXI7IGZvbnQtc2l6ZTogMTJweDsKICAgICAgICB9CiAgICAgICAgLmJ0bi1idXkgewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjMkU3RDMyOyBjb2xvcjogd2hpdGU7IGJvcmRlcjogbm9uZTsgcGFkZGluZzogOHB4IDE0cHg7CiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDRweDsgY3Vyc29yOiBwb2ludGVyOyBmb250LXdlaWdodDogYm9sZDsgZm9udC1mYW1pbHk6IHNhbnMtc2VyaWY7CiAgICAgICAgfQogICAgICAgIC5idG4tYnV5OmFjdGl2ZSB7IGJhY2tncm91bmQ6ICMxQjVFMjA7IHRyYW5zZm9ybTogc2NhbGUoMC45NSk7IH0KICAgICAgICAuYnRuLWJ1eTpkaXNhYmxlZCB7IGJhY2tncm91bmQ6ICNjY2M7IH0KICAgICAgICAKICAgICAgICAuYnRuLWdvbGQgeyBiYWNrZ3JvdW5kOiAjRkZENzAwOyBjb2xvcjogYmxhY2s7IH0KICAgICAgICAuYnRuLWxpbmsgeyBiYWNrZ3JvdW5kOiAjMjE5NkYzOyBjb2xvcjogd2hpdGU7IH0KICAgICAgICAuYnRuLXJvYm90IHsgYmFja2dyb3VuZDogI0ZGOTgwMDsgY29sb3I6IHdoaXRlOyB9CgogICAgICAgIC5idG4tY2xvc2Utc2hvcCB7CiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNkMzJmMmY7IGNvbG9yOiB3aGl0ZTsgYm9yZGVyOiBub25lOyBwYWRkaW5nOiAxMHB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7IGZvbnQtd2VpZ2h0OiBib2xkOyB3aWR0aDogMTAwJTsgbWFyZ2luLXRvcDogMTVweDsKICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyOyB6LWluZGV4OiAyMDAwICFpbXBvcnRhbnQ7CiAgICAgICAgfQogICAgICAgIC5idG4tY2xvc2Utc2hvcDphY3RpdmUgeyBiYWNrZ3JvdW5kOiAjYjcxYzFjOyB9CgogICAgICAgIC8qIENPUFkgQ09OVEFJTkVSICovCiAgICAgICAgLmNvcHktY29udGFpbmVyIHsKICAgICAgICAgICAgbWFyZ2luLXRvcDoxMHB4OyAKICAgICAgICAgICAgZGlzcGxheTogZmxleDsgCiAgICAgICAgICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47IAogICAgICAgICAgICBnYXA6IDVweDsgCiAgICAgICAgICAgIHdpZHRoOiAxMDAlOwogICAgICAgIH0KICAgICAgICAKICAgICAgICAjY29kZS1yZXN1bHQgewogICAgICAgICAgICBmb250LXdlaWdodDogYm9sZDsgCiAgICAgICAgICAgIGNvbG9yOiAjMzMzOyAKICAgICAgICAgICAgd29yZC1icmVhazogYnJlYWstYWxsOyAKICAgICAgICAgICAgZm9udC1zaXplOiAxNnB4OyAKICAgICAgICAgICAgYmFja2dyb3VuZDogI2VlZTsgCiAgICAgICAgICAgIHBhZGRpbmc6IDEycHg7IAogICAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7IAogICAgICAgICAgICBib3JkZXI6IDJweCBkYXNoZWQgIzk5OTsgCiAgICAgICAgICAgIG1pbi1oZWlnaHQ6IDQ1cHg7IAogICAgICAgICAgICBkaXNwbGF5OiBmbGV4OyAKICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsgCiAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOwogICAgICAgICAgICB1c2VyLXNlbGVjdDogdGV4dDsgLyogTWVtdW5na2lua2FuIHNlbGVrc2kgbWFudWFsICovCiAgICAgICAgICAgIC13ZWJraXQtdXNlci1zZWxlY3Q6IHRleHQ7CiAgICAgICAgfQoKICAgICAgICAuYnRuLWNvcHkgewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAjMjE5NkYzOyBjb2xvcjogd2hpdGU7IGJvcmRlcjogbm9uZTsgcGFkZGluZzogMTBweCAxNXB4OwogICAgICAgICAgICBib3JkZXItcmFkaXVzOiA1cHg7IGN1cnNvcjogcG9pbnRlcjsgZm9udC13ZWlnaHQ6IGJvbGQ7IGZvbnQtc2l6ZTogMTJweDsKICAgICAgICAgICAgd2hpdGUtc3BhY2U6IG5vd3JhcDsgd2lkdGg6IDEwMCU7CiAgICAgICAgfQogICAgICAgIC5idG4tY29weTphY3RpdmUgeyBiYWNrZ3JvdW5kOiAjMTk3NkQyOyB0cmFuc2Zvcm06IHNjYWxlKDAuOTgpOyB9CgogICAgICAgIC8qIENPTlRST0xTICovCiAgICAgICAgI2NvbnRyb2xzIHsKICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOyBib3R0b206IDIwcHg7IHdpZHRoOiAxMDAlOyBoZWlnaHQ6IDE0MHB4OwogICAgICAgICAgICBkaXNwbGF5OiBmbGV4OyBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47IHBhZGRpbmc6IDAgMjBweDsgcG9pbnRlci1ldmVudHM6IG5vbmU7IHotaW5kZXg6IDkwOwogICAgICAgIH0KICAgICAgICAuY29udHJvbC1ncm91cCB7IHBvaW50ZXItZXZlbnRzOiBhdXRvOyB9CiAgICAgICAgCiAgICAgICAgLmQtcGFkIHsKICAgICAgICAgICAgZGlzcGxheTogZ3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiA2MHB4IDYwcHggNjBweDsgZ3JpZC10ZW1wbGF0ZS1yb3dzOiA1MHB4IDUwcHg7IGdhcDogNXB4OwogICAgICAgIH0KICAgICAgICAucGFkLWJ0biB7CiAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LDI1NSwyNTUsMC4xNSk7IGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoMjU1LDI1NSwyNTUsMC40KTsKICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOHB4OyBjb2xvcjogd2hpdGU7IGZvbnQtc2l6ZTogMjRweDsgZGlzcGxheTogZmxleDsKICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsganVzdGlmeS1jb250ZW50OiBjZW50ZXI7IHVzZXItc2VsZWN0OiBub25lOwogICAgICAgICAgICB0b3VjaC1hY3Rpb246IG1hbmlwdWxhdGlvbjsKICAgICAgICB9CiAgICAgICAgLnBhZC1idG46YWN0aXZlIHsgYmFja2dyb3VuZDogcmdiYSgyNTUsMjU1LDI1NSwwLjQpOyB9CgogICAgICAgIC5hY3Rpb24tYnRuIHsKICAgICAgICAgICAgd2lkdGg6IDcwcHg7IGhlaWdodDogNzBweDsgYmFja2dyb3VuZDogI0U5MUU2MzsgYm9yZGVyLXJhZGl1czogNTAlOwogICAgICAgICAgICBib3JkZXI6IDRweCBzb2xpZCB3aGl0ZTsgZGlzcGxheTogZmxleDsgYWxpZ24taXRlbXM6IGNlbnRlcjsganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkOyBmb250LXNpemU6IDE2cHg7IGNvbG9yOiB3aGl0ZTsgYm94LXNoYWRvdzogMCA1cHggMTVweCByZ2JhKDAsMCwwLDAuNSk7CiAgICAgICAgICAgIHRvdWNoLWFjdGlvbjogbWFuaXB1bGF0aW9uOyBmb250LWZhbWlseTogc2Fucy1zZXJpZjsKICAgICAgICB9CiAgICAgICAgLmFjdGlvbi1idG46YWN0aXZlIHsgdHJhbnNmb3JtOiBzY2FsZSgwLjk1KTsgYmFja2dyb3VuZDogI0MyMTg1QjsgfQogICAgPC9zdHlsZT4KPC9oZWFkPgo8Ym9keT4KCiAgICAKICAgIDxzY3JpcHQgdHlwZT0iaW1wb3J0bWFwIj4KICAgICAgICB7ICJpbXBvcnRzIjogeyAidGhyZWUiOiAiaHR0cHM6Ly91bnBrZy5jb20vdGhyZWVAMC4xNjAuMC9idWlsZC90aHJlZS5tb2R1bGUuanMiIH0gfQogICAgPC9zY3JpcHQ+CgogICAgCiAgICA8ZGl2IGlkPSJsb2FkZXIiPgogICAgICAgIDxoMT5IQVJWRVNUIFZBTExFWTwvaDE+CiAgICAgICAgPHA+QXV0byAmIE1hbnVhbCBDb3B5IEZpeDwvcD4KICAgICAgICA8YnV0dG9uIGlkPSJidG4tc3RhcnQiPk1VTEFJIEdBTUU8L2J1dHRvbj4KICAgIDwvZGl2PgoKICAgIAogICAgPGRpdiBpZD0idWktbGF5ZXIiPgogICAgICAgIDxkaXYgaWQ9Im1vbmV5LWRpc3BsYXkiIGNsYXNzPSJodWQtcGFuZWwiPhogPHNwYW4gaWQ9Im1vbmV5LXZhbCI+MDwvc3Bhbj48L2Rpdj4KICAgICAgICA8ZGl2IGlkPSJpbnZlbnRvcnktYm94IiBjbGFzcz0iaHVkLXBhbmVsIj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iaW52LXNsb3QiIGlkPSJzbG90LTAiPho8ZGl2IGNsYXNzPSJpbnYtY291bnQiIGlkPSJjb3VudC0wIj4wPC9kaXY+PC9kaXY+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9Imludi1zbG90IiBpZD0ic2xvdC0xIj4aPGRpdiBjbGFzcz0iaW52LWNvdW50IiBpZD0iY291bnQtMSI+MDwvZGl2PjwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJpbnYtc2xvdCIgaWQ9InNsb3QtMiI+GjxkaXYgY2xhc3M9Imludi1jb3VudCIgaWQ9ImNvdW50LTIiPjA8L2Rpdj48L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGlkPSJpbnRlcmFjdC1tc2ciPlRFS0FOIEFDVElPTjwvZGl2PgogICAgICAgIAogICAgICAgIAogICAgICAgIDxkaXYgaWQ9InNob3AtbW9kYWwiPgogICAgICAgICAgICA8aDIgaWQ9InNob3AtdGl0bGUiPlRPS088L2gyPgogICAgICAgICAgICA8ZGl2IGlkPSJzaG9wLWl0ZW1zIj48L2Rpdj4KICAgICAgICAgICAgCiAgICAgICAgICAgIDxkaXYgaWQ9InJlZGVlbS1zZWN0aW9uIiBzdHlsZT0ibWFyZ2luLXRvcDoxNXB4OyBib3JkZXItdG9wOjFweCBzb2xpZCAjY2NjOyBwYWRkaW5nLXRvcDoxMHB4OyB3aWR0aDoxMDAlOyBkaXNwbGF5Om5vbmU7Ij4KICAgICAgICAgICAgICAgIDxwIHN0eWxlPSJtYXJnaW46MCAwIDEwcHggMDsgY29sb3I6IzMzMzsgZm9udC1zaXplOjEycHg7Ij48c3Ryb25nPkJlbGkgS29kZSBVbmlrPC9zdHJvbmc+PGJyPkhhcmdhOiA1MDAgVWFuZzwvcD4KICAgICAgICAgICAgICAgIDxidXR0b24gaWQ9ImJ0bi1idXktY29kZSIgY2xhc3M9ImJ0bi1idXkiIHN0eWxlPSJiYWNrZ3JvdW5kOiNFOTFFNjM7IHdpZHRoOjEwMCU7IHBhZGRpbmc6MTBweDsiPkJFTEkgS09ERTwvYnV0dG9uPgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb3B5LWNvbnRhaW5lciI+CiAgICAgICAgICAgICAgICAgICAgPGRpdiBpZD0iY29kZS1yZXN1bHQiPjwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxidXR0b24gaWQ9ImJ0bi1jb3B5LWNvZGUiIGNsYXNzPSJidG4tY29weSI+GiBUVU5HR1UuLi48L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGlkPSJjb3B5LXN0YXR1cyIgc3R5bGU9ImZvbnQtc2l6ZToxMHB4OyBjb2xvcjojNjY2OyB0ZXh0LWFsaWduOmNlbnRlcjsiPjwvZGl2PgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgPGJ1dHRvbiBpZD0iYnRuLWNsb3NlLXNob3AiIGNsYXNzPSJidG4tY2xvc2Utc2hvcCI+VFVUVVA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgIDwvZGl2PgoKICAgIAogICAgPGRpdiBpZD0iY29udHJvbHMiPgogICAgICAgIDxkaXYgY2xhc3M9ImNvbnRyb2wtZ3JvdXAgZC1wYWQiPgogICAgICAgICAgICA8ZGl2PjwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJwYWQtYnRuIiBpZD0iYnRuLXVwIj4aPC9kaXY+CiAgICAgICAgICAgIDxkaXY+PC9kaXY+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9InBhZC1idG4iIGlkPSJidG4tbGVmdCI+GjwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJwYWQtYnRuIiBpZD0iYnRuLWRvd24iPho8L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0icGFkLWJ0biIgaWQ9ImJ0bi1yaWdodCI+GjwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9ImNvbnRyb2wtZ3JvdXAiPgogICAgICAgICAgICA8ZGl2IGNsYXNzPSJhY3Rpb24tYnRuIiBpZD0iYnRuLWFjdGlvbiI+QUNUPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KCiAgICAKICAgIDxzY3JpcHQgdHlwZT0ibW9kdWxlIj4KICAgICAgICBpbXBvcnQgKiBhcyBUSFJFRSBmcm9tICd0aHJlZSc7CiAgICAgICAgaW1wb3J0IHsgaW5pdGlhbGl6ZUFwcCB9IGZyb20gImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tL2ZpcmViYXNlanMvOS4yMi4wL2ZpcmViYXNlLWFwcC5qcyI7CiAgICAgICAgaW1wb3J0IHsgZ2V0RGF0YWJhc2UsIHJlZiwgZ2V0IH0gZnJvbSAiaHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20vZmlyZWJhc2Vqcy85LjIyLjAvZmlyZWJhc2UtZGF0YWJhc2UuanMiOwoKICAgICAgICAvLyAtLS0gRklSRUJBU0UgQ09ORklHIC0tLQogICAgICAgIGNvbnN0IGZpcmViYXNlQ29uZmlnID0gewogICAgICAgICAgICBhcGlLZXk6ICJBSXphU3lEWEtlSU9sRDhyMHhOTTYxcHpoODJvZzBEQlF2bG54RWsiLAogICAgICAgICAgICBhdXRoRG9tYWluOiAiZmlyZS1tZS1hMmYwMC5maXJlYmFzZWFwcC5jb20iLAogICAgICAgICAgICBkYXRhYmFzZVVSTDogImh0dHBzOi8vZmlyZS1tZS1hMmYwMC1kZWZhdWx0LXJ0ZGIuYXNpYS1zb3V0aGVhc3QxLmZpcmViYXNlZGF0YWJhc2UuYXBwIiwKICAgICAgICAgICAgcHJvamVjdElkOiAiZmlyZS1tZS1hMmYwMCIsCiAgICAgICAgICAgIHN0b3JhZ2VCdWNrZXQ6ICJmaXJlLW1lLWEyZjAwLmZpcmViYXNlc3RvcmFnZS5hcHAiLAogICAgICAgICAgICBtZXNzYWdpbmdTZW5kZXJJZDogIjEwMTAxNTAzMjIzNzYiLAogICAgICAgICAgICBhcHBJZDogIjE6MTAxMDE1MDMyMjM3Njp3ZWI6NjI1YWIyODQ0OThmM2UyYmVhNzVmZCIKICAgICAgICB9OwogICAgICAgIAogICAgICAgIGxldCBkYiA9IG51bGw7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgY29uc3QgYXBwID0gaW5pdGlhbGl6ZUFwcChmaXJlYmFzZUNvbmZpZyk7CiAgICAgICAgICAgIGRiID0gZ2V0RGF0YWJhc2UoYXBwKTsKICAgICAgICAgICAgY29uc29sZS5sb2coIkZpcmViYXNlIENvbm5lY3RlZCIpOwogICAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICAgICAgY29uc29sZS53YXJuKCJGaXJlYmFzZSBpbml0IGVycm9yOiIsIGUpOwogICAgICAgIH0KCiAgICAgICAgLy8gLS0tIFZBUklBQkxFUyAtLS0KICAgICAgICBsZXQgbW9uZXkgPSAwOwogICAgICAgIHdpbmRvdy5tb25leSA9IDA7CiAgICAgICAgY29uc3QgaW52ZW50b3J5ID0geyBzZWVkX25vcm1hbDogNSwgc2VlZF9nb2xkOiAwLCBjcm9wOiAwIH07CiAgICAgICAgbGV0IGlzU2hvcE9wZW4gPSBmYWxzZTsKICAgICAgICBsZXQgZ2FtZVN0YXJ0ZWQgPSBmYWxzZTsKICAgICAgICBsZXQgY3VycmVudENvZGUgPSAiIjsKICAgICAgICAKICAgICAgICBjb25zdCBrZXlzID0geyB3OiBmYWxzZSwgYTogZmFsc2UsIHM6IGZhbHNlLCBkOiBmYWxzZSwgYWN0aW9uOiBmYWxzZSB9OwogICAgICAgIGNvbnN0IHBsYXllclNwZWVkID0gMC4xOwogICAgICAgIGNvbnN0IGNhbU9mZnNldCA9IG5ldyBUSFJFRS5WZWN0b3IzKDAsIDYsIDkpOwogICAgICAgIGxldCB0YXJnZXRSb3RhdGlvbiA9IDA7CiAgICAgICAgbGV0IGlzTW92aW5nID0gZmFsc2U7CiAgICAgICAgbGV0IGN1cnJlbnRJbnRlcmFjdGFibGUgPSBudWxsOwoKICAgICAgICAvLyAtLS0gQVNTRVQgRlVOQ1RJT05TIC0tLQogICAgICAgIGZ1bmN0aW9uIGNyZWF0ZUZhY2UocGFyZW50R3JvdXAsIHNraW5Db2xvcikgewogICAgICAgICAgICBjb25zdCBleWVHZW8gPSBuZXcgVEhSRUUuQm94R2VvbWV0cnkoMC4xNSwgMC4xNSwgMC4wNSk7CiAgICAgICAgICAgIGNvbnN0IGV5ZU1hdCA9IG5ldyBUSFJFRS5NZXNoQmFzaWNNYXRlcmlhbCh7IGNvbG9yOiAweDAwMDAwMCB9KTsKICAgICAgICAgICAgY29uc3QgbGVmdEV5ZSA9IG5ldyBUSFJFRS5NZXNoKGV5ZUdlbywgZXllTWF0KTsKICAgICAgICAgICAgbGVmdEV5ZS5wb3NpdGlvbi5zZXQoLTAuMTUsIDAuMSwgMC40MSk7IHBhcmVudEdyb3VwLmFkZChsZWZ0RXllKTsKICAgICAgICAgICAgY29uc3QgcmlnaHRFeWUgPSBuZXcgVEhSRUUuTWVzaChleWVHZW8sIGV5ZU1hdCk7CiAgICAgICAgICAgIHJpZ2h0RXllLnBvc2l0aW9uLnNldCgwLjE1LCAwLjEsIDAuNDEpOyBwYXJlbnRHcm91cC5hZGQocmlnaHRFeWUpOwogICAgICAgICAgICBjb25zdCBtb3V0aEdlbyA9IG5ldyBUSFJFRS5Cb3hHZW9tZXRyeSgwLjMsIDAuMDUsIDAuMDUpOwogICAgICAgICAgICBjb25zdCBtb3V0aE1hdCA9IG5ldyBUSFJFRS5NZXNoQmFzaWNNYXRlcmlhbCh7IGNvbG9yOiAweDAwMDAwMCB9KTsKICAgICAgICAgICAgY29uc3QgbW91dGggPSBuZXcgVEhSRUUuTWVzaChtb3V0aEdlbywgbW91dGhNYXQpOwogICAgICAgICAgICBtb3V0aC5wb3NpdGlvbi5zZXQoMCwgLTAuMSwgMC40MSk7IHBhcmVudEdyb3VwLmFkZChtb3V0aCk7CiAgICAgICAgfQoKICAgICAgICBmdW5jdGlvbiBjcmVhdGVSb2Jsb3hDaGFyKGNvbG9yLCBza2luQ29sb3IsIGhhdFR5cGUpIHsKICAgICAgICAgICAgY29uc3QgZ3JvdXAgPSBuZXcgVEhSRUUuR3JvdXAoKTsKICAgICAgICAgICAgY29uc3QgaGVhZEdlbyA9IG5ldyBUSFJFRS5Cb3hHZW9tZXRyeSgwLjgsIDAuOCwgMC44KTsKICAgICAgICAgICAgY29uc3QgaGVhZE1hdCA9IG5ldyBUSFJFRS5NZXNoU3RhbmRhcmRNYXRlcmlhbCh7IGNvbG9yOiBza2luQ29sb3IgfSk7CiAgICAgICAgICAgIGNvbnN0IGhlYWQgPSBuZXcgVEhSRUUuTWVzaChoZWFkR2VvLCBoZWFkTWF0KTsKICAgICAgICAgICAgaGVhZC5wb3NpdGlvbi55ID0gMS42OyBoZWFkLmNhc3RTaGFkb3cgPSB0cnVlOyBncm91cC5hZGQoaGVhZCk7CiAgICAgICAgICAgIGNyZWF0ZUZhY2UoaGVhZCwgc2tpbkNvbG9yKTsKCiAgICAgICAgICAgIGNvbnN0IHRvcnNvR2VvID0gbmV3IFRIUkVFLkJveEdlb21ldHJ5KDAuNiwgMC43LCAwLjQpOwogICAgICAgICAgICBjb25zdCB0b3Jzb01hdCA9IG5ldyBUSFJFRS5NZXNoU3RhbmRhcmRNYXRlcmlhbCh7IGNvbG9yOiBjb2xvciB9KTsKICAgICAgICAgICAgY29uc3QgdG9yc28gPSBuZXcgVEhSRUUuTWVzaCh0b3Jzb0dlbywgdG9yc29NYXQpOwogICAgICAgICAgICB0b3Jzby5wb3NpdGlvbi55ID0gMS4wOyB0b3Jzby5jYXN0U2hhZG93ID0gdHJ1ZTsgZ3JvdXAuYWRkKHRvcnNvKTsKCiAgICAgICAgICAgIGNvbnN0IGFybUdlbyA9IG5ldyBUSFJFRS5Cb3hHZW9tZXRyeSgwLjIsIDAuNywgMC4yKTsKICAgICAgICAgICAgY29uc3QgYXJtTWF0ID0gbmV3IFRIUkVFLk1lc2hTdGFuZGFyZE1hdGVyaWFsKHsgY29sb3I6IHNraW5Db2xvciB9KTsKICAgICAgICAgICAgY29uc3QgbGVmdEFybSA9IG5ldyBUSFJFRS5NZXNoKGFybUdlbywgYXJtTWF0KTsKICAgICAgICAgICAgbGVmdEFybS5wb3NpdGlvbi5zZXQoLTAuNCwgMS4wLCAwKTsgbGVmdEFybS5jYXN0U2hhZG93ID0gdHJ1ZTsgZ3JvdXAuYWRkKGxlZnRBcm0pOwogICAgICAgICAgICBjb25zdCByaWdodEFybSA9IG5ldyBUSFJFRS5NZXNoKGFybUdlbywgYXJtTWF0KTsKICAgICAgICAgICAgcmlnaHRBcm0ucG9zaXRpb24uc2V0KDAuNCwgMS4wLCAwKTsgcmlnaHRBcm0uY2FzdFNoYWRvdyA9IHRydWU7IGdyb3VwLmFkZChyaWdodEFybSk7CgogICAgICAgICAgICBjb25zdCBsZWdHZW8gPSBuZXcgVEhSRUUuQm94R2VvbWV0cnkoMC4yNSwgMC44LCAwLjI1KTsKICAgICAgICAgICAgY29uc3QgbGVnTWF0ID0gbmV3IFRIUkVFLk1lc2hTdGFuZGFyZE1hdGVyaWFsKHsgY29sb3I6IDB4MWU4OGU1IH0pOwogICAgICAgICAgICBjb25zdCBsZWZ0TGVnID0gbmV3IFRIUkVFLk1lc2gobGVnR2VvLCBsZWdNYXQpOwogICAgICAgICAgICBsZWZ0TGVnLnBvc2l0aW9uLnNldCgtMC4xNSwgMC40LCAwKTsgZ3JvdXAuYWRkKGxlZnRMZWcpOwogICAgICAgICAgICBjb25zdCByaWdodExlZyA9IG5ldyBUSFJFRS5NZXNoKGxlZ0dlbywgbGVnTWF0KTsKICAgICAgICAgICAgcmlnaHRMZWcucG9zaXRpb24uc2V0KDAuMTUsIDAuNCwgMCk7IGdyb3VwLmFkZChyaWdodExlZyk7CgogICAgICAgICAgICBpZiAoaGF0VHlwZSA9PT0gJ2Zhcm1lcicpIHsKICAgICAgICAgICAgICAgIGNvbnN0IGJyaW0gPSBuZXcgVEhSRUUuTWVzaChuZXcgVEhSRUUuQ3lsaW5kZXJHZW9tZXRyeSgwLjcsIDAuNywgMC4xLCAxNiksIG5ldyBUSFJFRS5NZXNoU3RhbmRhcmRNYXRlcmlhbCh7IGNvbG9yOiAweEQ3Q0NDOCB9KSk7CiAgICAgICAgICAgICAgICBicmltLnBvc2l0aW9uLnkgPSAyLjA1OyBncm91cC5hZGQoYnJpbSk7CiAgICAgICAgICAgICAgICBjb25zdCB0b3AgPSBuZXcgVEhSRUUuTWVzaChuZXcgVEhSRUUuQ3lsaW5kZXJHZW9tZXRyeSgwLjM1LCAwLjM1LCAwLjMsIDE2KSwgbmV3IFRIUkVFLk1lc2hTdGFuZGFyZE1hdGVyaWFsKHsgY29sb3I6IDB4RDdDQ0M4IH0pKTsKICAgICAgICAgICAgICAgIHRvcC5wb3NpdGlvbi55ID0gMi4yOyBncm91cC5hZGQodG9wKTsKICAgICAgICAgICAgfSBlbHNlIGlmIChoYXRUeXBlID09PSAnbWVyY2hhbnQnKSB7CiAgICAgICAgICAgICAgICBjb25zdCBjYXAgPSBuZXcgVEhSRUUuTWVzaChuZXcgVEhSRUUuQm94R2VvbWV0cnkoMC45LCAwLjIsIDAuOSksIG5ldyBUSFJFRS5NZXNoU3RhbmRhcmRNYXRlcmlhbCh7Y29sb3I6IDB4RkZENzAwfSkpOwogICAgICAgICAgICAgICAgY2FwLnBvc2l0aW9uLnNldCgwLCAyLjAsIDAuMDUpOyBncm91cC5hZGQoY2FwKTsKICAgICAgICAgICAgICAgIGNvbnN0IHZpc29yID0gbmV3IFRIUkVFLk1lc2gobmV3IFRIUkVFLkJveEdlb21ldHJ5KDAuOSwgMC4yNSwgMC41KSwgbmV3IFRIUkVFLk1lc2hTdGFuZGFyZE1hdGVyaWFsKHtjb2xvcjogMHhGRkEwMDB9KSk7CiAgICAgICAgICAgICAgICB2aXNvci5wb3NpdGlvbi5zZXQoMCwgMS45NSwgMC4zKTsgZ3JvdXAuYWRkKHZpc29yKTsKICAgICAgICAgICAgfSBlbHNlIGlmIChoYXRUeXBlID09PSAnYXNzaXN0JykgewogICAgICAgICAgICAgICAgY29uc3QgY2FwID0gbmV3IFRIUkVFLk1lc2gobmV3IFRIUkVFLkNvbmVHZW9tZXRyeSgwLjUsIDAuMiwgMTYpLCBuZXcgVEhSRUUuTWVzaFN0YW5kYXJkTWF0ZXJpYWwoe2NvbG9yOiAweEZCQzAyRH0pKTsKICAgICAgICAgICAgICAgIGNhcC5wb3NpdGlvbi55ID0gMi4xOyBncm91cC5hZGQoY2FwKTsKICAgICAgICAgICAgICAgIGNvbnN0IGFudCA9IG5ldyBUSFJFRS5NZXNoKG5ldyBUSFJFRS5DeWxpbmRlckdlb21ldHJ5KDAuMDIsIDAuMDIsIDAuNSksIG5ldyBUSFJFRS5NZXNoQmFzaWNNYXRlcmlhbCh7Y29sb3I6MHhmZjAwMDB9KSk7CiAgICAgICAgICAgICAgICBhbnQucG9zaXRpb24ueSA9IDIuMzsgZ3JvdXAuYWRkKGFudCk7CiAgICAgICAgICAgIH0gZWxzZSBpZiAoaGF0VHlwZSA9PT0gJ3JlZGVlbScpIHsKICAgICAgICAgICAgICAgIGNvbnN0IGNhcCA9IG5ldyBUSFJFRS5NZXNoKG5ldyBUSFJFRS5Cb3hHZW9tZXRyeSgwLjksIDAuMTUsIDAuOSksIG5ldyBUSFJFRS5NZXNoU3RhbmRhcmRNYXRlcmlhbCh7Y29sb3I6IDB4MDAwMDAwfSkpOwogICAgICAgICAgICAgICAgY2FwLnBvc2l0aW9uLnNldCgwLCAyLjEsIDAuMDUpOyBncm91cC5hZGQoY2FwKTsKICAgICAgICAgICAgICAgIGNvbnN0IGV5ZUdlbyA9IG5ldyBUSFJFRS5Cb3hHZW9tZXRyeSgwLjIsIDAuMiwgMC4wNSk7CiAgICAgICAgICAgICAgICBjb25zdCBleWVNYXQgPSBuZXcgVEhSRUUuTWVzaEJhc2ljTWF0ZXJpYWwoe2NvbG9yOiAweDAwQkNENH0pOwogICAgICAgICAgICAgICAgY29uc3QgZXllMSA9IG5ldyBUSFJFRS5NZXNoKGV5ZUdlbywgZXllT
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Harvest Valley - Smart Copy</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; touch-action: none; user-select: none; -webkit-user-select: none; }
+        
+        #loader {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a2f1a; color: #fff; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 99999; pointer-events: auto;
+        }
+        #loader h1 { color: #4CAF50; margin-bottom: 20px; text-shadow: 2px 2px #000; text-align: center; }
+        #loader p { color: #ccc; font-size: 14px; margin-bottom: 30px; }
+        
+        #btn-start {
+            padding: 20px 40px; font-size: 20px; background: #4CAF50; color: white; 
+            border: none; border-radius: 10px; font-weight: bold; cursor: pointer; 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            pointer-events: auto !important; position: relative; z-index: 100000;
+        }
+        #btn-start:active { transform: scale(0.95); background: #388E3C; }
+        
+        #ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100;
+            display: none;
+        }
+        
+        .hud-panel {
+            background: rgba(0, 0, 0, 0.7); padding: 8px; border-radius: 8px;
+            color: white; margin: 10px; pointer-events: auto; backdrop-filter: blur(4px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        #money-display { position: absolute; top: 10px; right: 10px; font-weight: bold; font-size: 18px; color: #FFD700; text-shadow: 1px 1px #000; }
+        
+        #inventory-box {
+            position: absolute; top: 10px; left: 10px;
+            display: grid; grid-template-columns: repeat(3, 40px); gap: 5px;
+        }
+        .inv-slot {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.1);
+            border: 2px solid #555; border-radius: 4px; display: flex;
+            align-items: center; justify-content: center; font-size: 10px; color: #fff;
+            position: relative; font-weight: bold;
+        }
+        .inv-count { position: absolute; bottom: 0; right: 0; background: red; border-radius: 50%; width: 14px; height: 14px; font-size: 9px; display: flex; align-items: center; justify-content: center; border: 1px solid white; }
+
+        #interact-msg {
+            position: absolute; bottom: 30%; left: 50%; transform: translate(-50%, 0);
+            background: rgba(0,0,0,0.85); color: #fff; padding: 8px 16px;
+            border-radius: 20px; font-weight: bold; display: none; pointer-events: none;
+            z-index: 101; border: 1px solid white; text-align: center;
+        }
+
+        /* SHOP UI */
+        #shop-modal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 420px; background: #fff; border-radius: 10px;
+            padding: 20px; display: none; flex-direction: column; align-items: center;
+            z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            pointer-events: auto; touch-action: manipulation;
+        }
+        #shop-modal h2 { margin-top: 0; color: #2E7D32; font-family: 'Arial Black', sans-serif; border-bottom: 2px solid #ddd; width:100%; padding-bottom:10px; }
+        .shop-item {
+            display: flex; justify-content: space-between; width: 100%; padding: 12px 0;
+            border-bottom: 1px solid #eee; align-items: center; font-size: 12px;
+        }
+        .btn-buy {
+            background: #2E7D32; color: white; border: none; padding: 8px 14px;
+            border-radius: 4px; cursor: pointer; font-weight: bold; font-family: sans-serif;
+        }
+        .btn-buy:active { background: #1B5E20; transform: scale(0.95); }
+        .btn-buy:disabled { background: #ccc; }
+        
+        .btn-gold { background: #FFD700; color: black; }
+        .btn-link { background: #2196F3; color: white; }
+        .btn-robot { background: #FF9800; color: white; }
+
+        .btn-close-shop {
+            background: #d32f2f; color: white; border: none; padding: 10px;
+            border-radius: 5px; font-weight: bold; width: 100%; margin-top: 15px;
+            cursor: pointer; z-index: 2000 !important;
+        }
+        .btn-close-shop:active { background: #b71c1c; }
+
+        /* COPY CONTAINER */
+        .copy-container {
+            margin-top:10px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px; 
+            width: 100%;
+        }
+        
+        #code-result {
+            font-weight: bold; 
+            color: #333; 
+            word-break: break-all; 
+            font-size: 16px; 
+            background: #eee; 
+            padding: 12px; 
+            text-align: center; 
+            border: 2px dashed #999; 
+            min-height: 45px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            user-select: text; /* Memungkinkan seleksi manual */
+            -webkit-user-select: text;
+        }
+
+        .btn-copy {
+            background: #2196F3; color: white; border: none; padding: 10px 15px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px;
+            white-space: nowrap; width: 100%;
+        }
+        .btn-copy:active { background: #1976D2; transform: scale(0.98); }
+
+        /* CONTROLS */
+        #controls {
+            position: absolute; bottom: 20px; width: 100%; height: 140px;
+            display: flex; justify-content: space-between; padding: 0 20px; pointer-events: none; z-index: 90;
+        }
+        .control-group { pointer-events: auto; }
+        
+        .d-pad {
+            display: grid; grid-template-columns: 60px 60px 60px; grid-template-rows: 50px 50px; gap: 5px;
+        }
+        .pad-btn {
+            background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 8px; color: white; font-size: 24px; display: flex;
+            align-items: center; justify-content: center; user-select: none;
+            touch-action: manipulation;
+        }
+        .pad-btn:active { background: rgba(255,255,255,0.4); }
+
+        .action-btn {
+            width: 70px; height: 70px; background: #E91E63; border-radius: 50%;
+            border: 4px solid white; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 16px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            touch-action: manipulation; font-family: sans-serif;
+        }
+        .action-btn:active { transform: scale(0.95); background: #C2185B; }
+    </style>
+</head>
+<body>
+
+    <!-- IMPORT MAP THREE.JS -->
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+
+    <!-- LOADING SCREEN -->
+    <div id="loader">
+        <h1>HARVEST VALLEY</h1>
+        <p>Auto & Manual Copy Fix</p>
+        <button id="btn-start">MULAI GAME</button>
+    </div>
+
+    <!-- UI LAYER -->
+    <div id="ui-layer">
+        <div id="money-display" class="hud-panel"> <span id="money-val">0</span></div>
+        <div id="inventory-box" class="hud-panel">
+            <div class="inv-slot" id="slot-0"><div class="inv-count" id="count-0">0</div></div>
+            <div class="inv-slot" id="slot-1"><div class="inv-count" id="count-1">0</div></div>
+            <div class="inv-slot" id="slot-2"><div class="inv-count" id="count-2">0</div></div>
+        </div>
+        <div id="interact-msg">TEKAN ACTION</div>
+        
+        <!-- SHOP MODAL -->
+        <div id="shop-modal">
+            <h2 id="shop-title">TOKO</h2>
+            <div id="shop-items"></div>
+            
+            <div id="redeem-section" style="margin-top:15px; border-top:1px solid #ccc; padding-top:10px; width:100%; display:none;">
+                <p style="margin:0 0 10px 0; color:#333; font-size:12px;"><strong>Beli Kode Unik</strong><br>Harga: 500 Uang</p>
+                <button id="btn-buy-code" class="btn-buy" style="background:#E91E63; width:100%; padding:10px;">BELI KODE</button>
+                
+                <div class="copy-container">
+                    <div id="code-result"></div>
+                    <button id="btn-copy-code" class="btn-copy"> TUNGGU...</button>
+                    <div id="copy-status" style="font-size:10px; color:#666; text-align:center;"></div>
+                </div>
+            </div>
+
+            <button id="btn-close-shop" class="btn-close-shop">TUTUP</button>
+        </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div id="controls">
+        <div class="control-group d-pad">
+            <div></div>
+            <div class="pad-btn" id="btn-up"></div>
+            <div></div>
+            <div class="pad-btn" id="btn-left"></div>
+            <div class="pad-btn" id="btn-down"></div>
+            <div class="pad-btn" id="btn-right"></div>
+        </div>
+        <div class="control-group">
+            <div class="action-btn" id="btn-action">ACT</div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        // --- FIREBASE CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXKeIOlD8r0xNM61pzh82og0DBQvlnxEk",
+            authDomain: "fire-me-a2f00.firebaseapp.com",
+            databaseURL: "https://fire-me-a2f00-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "fire-me-a2f00",
+            storageBucket: "fire-me-a2f00.firebasestorage.app",
+            messagingSenderId: "1010150322376",
+            appId: "1:1010150322376:web:625ab284498f3e2bea75fd"
+        };
+        
+        let db = null;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            console.log("Firebase Connected");
+        } catch (e) {
+            console.warn("Firebase init error:", e);
+        }
+
+        // --- VARIABLES ---
+        let money = 0;
+        window.money = 0;
+        const inventory = { seed_normal: 5, seed_gold: 0, crop: 0 };
+        let isShopOpen = false;
+        let gameStarted = false;
+        let currentCode = "";
+        
+        const keys = { w: false, a: false, s: false, d: false, action: false };
+        const playerSpeed = 0.1;
+        const camOffset = new THREE.Vector3(0, 6, 9);
+        let targetRotation = 0;
+        let isMoving = false;
+        let currentInteractable = null;
+
+        // --- ASSET FUNCTIONS ---
+        function createFace(parentGroup, skinColor) {
+            const eyeGeo = new THREE.BoxGeometry(0.15, 0.15, 0.05);
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+            leftEye.position.set(-0.15, 0.1, 0.41); parentGroup.add(leftEye);
+            const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rightEye.position.set(0.15, 0.1, 0.41); parentGroup.add(rightEye);
+            const mouthGeo = new THREE.BoxGeometry(0.3, 0.05, 0.05);
+            const mouthMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+            mouth.position.set(0, -0.1, 0.41); parentGroup.add(mouth);
+        }
+
+        function createRobloxChar(color, skinColor, hatType) {
+            const group = new THREE.Group();
+            const headGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+            const headMat = new THREE.MeshStandardMaterial({ color: skinColor });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 1.6; head.castShadow = true; group.add(head);
+            createFace(head, skinColor);
+
+            const torsoGeo = new THREE.BoxGeometry(0.6, 0.7, 0.4);
+            const torsoMat = new THREE.MeshStandardMaterial({ color: color });
+            const torso = new THREE.Mesh(torsoGeo, torsoMat);
+            torso.position.y = 1.0; torso.castShadow = true; group.add(torso);
+
+            const armGeo = new THREE.BoxGeometry(0.2, 0.7, 0.2);
+            const armMat = new THREE.MeshStandardMaterial({ color: skinColor });
+            const leftArm = new THREE.Mesh(armGeo, armMat);
+            leftArm.position.set(-0.4, 1.0, 0); leftArm.castShadow = true; group.add(leftArm);
+            const rightArm = new THREE.Mesh(armGeo, armMat);
+            rightArm.position.set(0.4, 1.0, 0); rightArm.castShadow = true; group.add(rightArm);
+
+            const legGeo = new THREE.BoxGeometry(0.25, 0.8, 0.25);
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x1e88e5 });
+            const leftLeg = new THREE.Mesh(legGeo, legMat);
+            leftLeg.position.set(-0.15, 0.4, 0); group.add(leftLeg);
+            const rightLeg = new THREE.Mesh(legGeo, legMat);
+            rightLeg.position.set(0.15, 0.4, 0); group.add(rightLeg);
+
+            if (hatType === 'farmer') {
+                const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.1, 16), new THREE.MeshStandardMaterial({ color: 0xD7CCC8 }));
+                brim.position.y = 2.05; group.add(brim);
+                const top = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0xD7CCC8 }));
+                top.position.y = 2.2; group.add(top);
+            } else if (hatType === 'merchant') {
+                const cap = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.2, 0.9), new THREE.MeshStandardMaterial({color: 0xFFD700}));
+                cap.position.set(0, 2.0, 0.05); group.add(cap);
+                const visor = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.25, 0.5), new THREE.MeshStandardMaterial({color: 0xFFA000}));
+                visor.position.set(0, 1.95, 0.3); group.add(visor);
+            } else if (hatType === 'assist') {
+                const cap = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.2, 16), new THREE.MeshStandardMaterial({color: 0xFBC02D}));
+                cap.position.y = 2.1; group.add(cap);
+                const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.5), new THREE.MeshBasicMaterial({color:0xff0000}));
+                ant.position.y = 2.3; group.add(ant);
+            } else if (hatType === 'redeem') {
+                const cap = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.15, 0.9), new THREE.MeshStandardMaterial({color: 0x000000}));
+                cap.position.set(0, 2.1, 0.05); group.add(cap);
+                const eyeGeo = new THREE.BoxGeometry(0.2, 0.2, 0.05);
+                const eyeMat = new THREE.MeshBasicMaterial({color: 0x00BCD4});
+                const eye1 = new THREE.Mesh(eyeGeo, eyeMat); eye1.position.set(-0.25, 2.2, 0.46); group.add(eye1);
+                const eye2 = new THREE.Mesh(eyeGeo, eyeMat); eye2.position.set(0.25, 2.2, 0.46); group.add(eye2);
+            }
+
+            group.userData = { leftLeg, rightLeg, leftArm, rightArm, walkTime: 0 };
+            return group;
+        }
+
+        function createCat() {
+            const catGroup = new THREE.Group();
+            const bodyGeo = new THREE.CylinderGeometry(0.3, 0.6, 0.5, 8);
+            const furMat = new THREE.MeshStandardMaterial({ color: 0xF5F5DC });
+            const body = new THREE.Mesh(bodyGeo, furMat);
+            body.position.y = 0.4;
+            body.castShadow = true;
+            catGroup.add(body);
+            const headGeo = new THREE.SphereGeometry(0.25, 16, 16);
+            const head = new THREE.Mesh(headGeo, furMat);
+            head.position.y = 0.7;
+            head.castShadow = true;
+            catGroup.add(head);
+            const earGeo = new THREE.ConeGeometry(0.1, 0.15, 16);
+            const leftEar = new THREE.Mesh(earGeo, furMat);
+            leftEar.position.set(-0.15, 0.85, 0); leftEar.rotation.x = -0.5;
+            catGroup.add(leftEar);
+            const rightEar = new THREE.Mesh(earGeo, furMat);
+            rightEar.position.set(0.15, 0.85, 0); rightEar.rotation.x = -0.5;
+            catGroup.add(rightEar);
+            const tailGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.3);
+            const tail = new THREE.Mesh(tailGeo, furMat);
+            tail.position.set(0, 0.6, -0.3);
+            tail.rotation.x = Math.PI / 2;
+            catGroup.add(tail);
+            return catGroup;
+        }
+
+        // --- WORLD GENERATION ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.Fog(0x87CEEB, 15, 60);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        document.body.appendChild(renderer.domElement);
+
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(30, 60, 30);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        scene.add(dirLight);
+
+        const groundGeo = new THREE.PlaneGeometry(150, 150);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0x3E2723, roughness: 1 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        function createTree(x, z) {
+            const group = new THREE.Group();
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.4, 3, 8), new THREE.MeshStandardMaterial({ color: 0x4E342E }));
+            trunk.position.y = 1.5; trunk.castShadow = true; group.add(trunk);
+            const leavesMat = new THREE.MeshStandardMaterial({ color: 0x1B5E20 });
+            const l1 = new THREE.Mesh(new THREE.ConeGeometry(1.5, 2, 8), leavesMat); l1.position.y = 3.5; group.add(l1);
+            const l2 = new THREE.Mesh(new THREE.ConeGeometry(1.2, 2, 8), leavesMat); l2.position.y = 4.5; group.add(l2);
+            const l3 = new THREE.Mesh(new THREE.ConeGeometry(0.8, 1.5, 8), leavesMat); l3.position.y = 5.5; group.add(l3);
+            group.position.set(x, 0, z);
+            scene.add(group);
+        }
+        for(let i=0; i<60; i++) {
+            const angle = Math.random() * Math.PI * 2; const radius = 15 + Math.random() * 30;
+            createTree(Math.cos(angle) * radius, Math.sin(angle) * radius);
+        }
+
+        const plots = [];
+        const plotGeo = new THREE.BoxGeometry(1.9, 0.3, 1.9);
+        const soilMat = new THREE.MeshStandardMaterial({ color: 0x5D4037 });
+        const plantGeo = new THREE.SphereGeometry(0.3, 8, 8);
+        const plantMatNormal = new THREE.MeshStandardMaterial({ color: 0x4CAF50 });
+        const plantMatGold = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+
+        for(let x = -3; x <= 3; x++) {
+            for(let z = -3; z <= 3; z++) {
+                const plot = new THREE.Mesh(plotGeo, soilMat);
+                plot.position.set(x * 2, 0.15, z * 2);
+                plot.receiveShadow = true;
+                plot.userData = { isPlot: true, hasPlant: false, growth: 0, type: 'normal', plantMesh: null };
+                scene.add(plot);
+                plots.push(plot);
+            }
+        }
+
+        // --- GEDUNG TOKO ---
+        const shopGroup = new THREE.Group();
+        const woodMat = new THREE.MeshStandardMaterial({ color: 0x5D4037 });
+        const floor = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 8), woodMat);
+        floor.position.set(0, 0.25, -12);
+        shopGroup.add(floor);
+        const wall = new THREE.Mesh(new THREE.BoxGeometry(16, 4, 0.5), woodMat);
+        wall.position.set(0, 2.25, -16.5);
+        shopGroup.add(wall);
+        const roof = new THREE.Mesh(new THREE.ConeGeometry(8, 3, 4), new THREE.MeshStandardMaterial({color: 0x3E2723}));
+        roof.position.set(0, 5.5, -12);
+        roof.rotation.y = Math.PI / 4;
+        shopGroup.add(roof);
+
+        const npc1 = createRobloxChar(0xD7CCC8, 0xFFCCBC, 'farmer');
+        npc1.position.set(-5, 0, -13);
+        npc1.userData = { type: 'npc', role: 'farmer' };
+        shopGroup.add(npc1);
+        
+        const npc2 = createRobloxChar(0xFFD700, 0xFFCCBC, 'merchant');
+        npc2.position.set(-1.5, 0, -13);
+        npc2.userData = { type: 'npc', role: 'merchant' };
+        shopGroup.add(npc2);
+        
+        const npc3 = createRobloxChar(0xFBC02D, 0xFFCCBC, 'assist');
+        npc3.position.set(2, 0, -13);
+        npc3.userData = { type: 'npc', role: 'assist' };
+        shopGroup.add(npc3);
+        
+        const npc4 = createRobloxChar(0x000000, 0xFFCCBC, 'redeem');
+        npc4.position.set(5.5, 0, -13);
+        npc4.userData = { type: 'npc', role: 'redeem' };
+        shopGroup.add(npc4);
+
+        scene.add(shopGroup);
+
+        const player = createRobloxChar(0xE91E63, 0xFFCCBC, null);
+        player.position.set(0, 0, 5);
+        scene.add(player);
+
+        const pet = createCat();
+        scene.add(pet);
+
+        // --- UI LOGIC ---
+        function updateUI() {
+            document.getElementById('money-val').innerText = Math.floor(money);
+            window.money = money;
+            document.getElementById('count-0').innerText = inventory.seed_normal;
+            document.getElementById('count-1').innerText = inventory.crop;
+            document.getElementById('count-2').innerText = inventory.seed_gold;
+        }
+
+        window.closeShop = function() {
+            document.getElementById('shop-modal').style.display = 'none';
+            document.getElementById('redeem-section').style.display = 'none';
+            isShopOpen = false;
+            currentInteractable = null;
+        };
+
+        window.openShop = function(type) {
+            isShopOpen = true;
+            const modal = document.getElementById('shop-modal');
+            const title = document.getElementById('shop-title');
+            const list = document.getElementById('shop-items');
+            const redeemSec = document.getElementById('redeem-section');
+            
+            list.innerHTML = '';
+            document.getElementById('code-result').innerText = '';
+            document.getElementById('code-result').style.color = "#333";
+            document.getElementById('btn-copy-code').innerText = " TUNGGU...";
+            document.getElementById('btn-copy-code').disabled = true;
+            document.getElementById('copy-status').innerText = "";
+            redeemSec.style.display = 'none';
+
+            if (type === 'farmer') {
+                title.innerText = "TOKO PETERNAK";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Bibit Wortel (10)</span><button class="btn-buy" id="btn-seed-buy">BELI (50)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-seed-buy').onclick = function() {
+                    if(money >= 50) { money -= 50; inventory.seed_normal += 10; updateUI(); } 
+                    else { alert("Uang tidak cukup!"); }
+                };
+                const sellItem = document.createElement('div');
+                sellItem.className = 'shop-item';
+                sellItem.innerHTML = `<span>Jual Wortel (All)</span><button class="btn-buy" id="btn-sell-crops">JUAL</button>`;
+                list.appendChild(sellItem);
+                document.getElementById('btn-sell-crops').onclick = function() {
+                    if(inventory.crop > 0) { money += inventory.crop * 20; inventory.crop = 0; updateUI(); }
+                };
+
+            } else if (type === 'merchant') {
+                title.innerText = "MERCHANT MAHAL";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Bibit Emas Premium (1)</span><button class="btn-buy btn-gold" id="btn-gold-buy">BELI (500)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-gold-buy').onclick = function() {
+                    if(money >= 500) { money -= 500; inventory.seed_gold += 1; updateUI(); } 
+                    else { alert("Uang tidak cukup!"); }
+                };
+
+            } else if (type === 'assist') {
+                title.innerText = "ROBOT TANI";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Jasa Robot (Tanam & Panen)</span><button class="btn-buy btn-robot" id="btn-hire-robot">SEWA (300)</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-hire-robot').onclick = function() {
+                    if(money >= 300) {
+                        money -= 300; updateUI();
+                        let plotsModified = 0;
+                        plots.forEach(plot => {
+                            if (plot.userData.hasPlant && plot.userData.growth >= 100) {
+                                inventory.crop += 5;
+                                plot.userData.hasPlant = false; plot.userData.growth = 0;
+                                if(plot.userData.plantMesh) { plot.remove(plot.userData.plantMesh); plot.userData.plantMesh = null; }
+                                plotsModified++;
+                            } else if (!plot.userData.hasPlant) {
+                                let planted = false;
+                                if (inventory.seed_normal > 0) { inventory.seed_normal--; planted = 'normal'; }
+                                else if (inventory.seed_gold > 0) { inventory.seed_gold--; planted = 'gold'; }
+                                if(planted) {
+                                    plot.userData.hasPlant = true; plot.userData.growth = 0; plot.userData.type = planted;
+                                    const pMat = planted === 'normal' ? plantMatNormal : plantMatGold;
+                                    const mesh = new THREE.Mesh(plantGeo, pMat);
+                                    mesh.position.set(0, 0.3, 0); mesh.scale.set(0.1, 0.1, 0.1);
+                                    plot.add(mesh); plot.userData.plantMesh = mesh;
+                                    plotsModified++;
+                                }
+                            }
+                        });
+                        updateUI(); alert(`Robot bekerja! ${plotsModified} lahan diproses.`);
+                    } else { alert("Uang tidak cukup!"); }
+                };
+
+            } else if (type === 'redeem') {
+                title.innerText = "REDEEM CENTER";
+                const item = document.createElement('div');
+                item.className = 'shop-item';
+                item.innerHTML = `<span>Buka Website Redeem</span><button class="btn-buy btn-link" id="btn-go-redeem">BUKA LINK</button>`;
+                list.appendChild(item);
+                document.getElementById('btn-go-redeem').onclick = function() {
+                    window.open('https://knighttora-sketch.github.io/Cokiredeem/', '_blank');
+                };
+                redeemSec.style.display = 'block';
+            }
+
+            modal.style.display = 'flex';
+        };
+
+        // --- MANUAL COPY BUTTON ---
+        document.getElementById('btn-copy-code').addEventListener('click', () => {
+            const resDiv = document.getElementById('code-result');
+            // Fallback lama namun lebih robust: Select Text
+            const range = document.createRange();
+            range.selectNode(resDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            // Coba eksekusi perintah copy
+            try {
+                document.execCommand('copy');
+                document.getElementById('copy-status').innerText = "Teks terpilih! Paste manual (Ctrl+V).";
+                setTimeout(() => document.getElementById('copy-status').innerText = "", 3000);
+            } catch (err) {
+                document.getElementById('copy-status').innerText = "Silakan blok teks manual.";
+            }
+        });
+
+        // --- BUY & AUTO COPY LOGIC ---
+        document.getElementById('btn-buy-code').addEventListener('click', () => {
+            const resDiv = document.getElementById('code-result');
+            const btnCopy = document.getElementById('btn-copy-code');
+            const statusDiv = document.getElementById('copy-status');
+            
+            resDiv.innerText = "Mengambil...";
+            resDiv.style.color = "#333";
+            btnCopy.disabled = true;
+            btnCopy.innerText = " TUNGGU...";
+            statusDiv.innerText = "";
+            
+            if(money >= 500) {
+                if (!db) { 
+                    resDiv.innerText = "Error: DB Offline"; 
+                    resDiv.style.color = "red";
+                    btnCopy.disabled = false;
+                    btnCopy.innerText = " COBA LAGI";
+                    return; 
+                }
+
+                const codesRef = ref(db, 'codes');
+                
+                get(codesRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        const keys = Object.keys(data);
+                        
+                        if (keys.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * keys.length);
+                            const selectedKey = keys[randomIndex];
+                            
+                            money -= 500;
+                            updateUI();
+                            currentCode = selectedKey;
+
+                            resDiv.innerText = selectedKey;
+                            resDiv.style.color = "green";
+                            resDiv.style.fontWeight = "bold";
+                            resDiv.style.fontSize = "20px";
+                            
+                            // 1. COBA AUTO COPY (SILENT)
+                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                navigator.clipboard.writeText(selectedKey).then(() => {
+                                    statusDiv.innerText = " Otomatis Disalin!";
+                                    btnCopy.innerText = " DISALIN!";
+                                    btnCopy.disabled = true;
+                                }).catch(err => {
+                                    console.warn("Auto copy gagal, siapkan tombol manual:", err);
+                                    // Jika auto gagal, aktifkan tombol manual
+                                    btnCopy.innerText = " SALIN MANUAL";
+                                    btnCopy.disabled = false;
+                                    statusDiv.innerText = "Auto copy gagal. Tekan tombol di bawah.";
+                                });
+                            } else {
+                                // Jika API tidak support (HTTP vs HTTPS), gunakan tombol manual
+                                btnCopy.innerText = " SALIN MANUAL";
+                                btnCopy.disabled = false;
+                                statusDiv.innerText = "Browser tidak support auto-copy. Gunakan tombol manual.";
+                            }
+
+                        } else {
+                            resDiv.innerText = "Stok Kode HABIS!";
+                            resDiv.style.color = "red";
+                            btnCopy.disabled = true;
+                            btnCopy.innerText = " KOSONG";
+                        }
+                    } else {
+                        resDiv.innerText = "Database 'codes' Kosong!";
+                        resDiv.style.color = "red";
+                        btnCopy.disabled = true;
+                        btnCopy.innerText = " ERROR";
+                    }
+                }).catch((error) => {
+                    resDiv.innerText = "Error Koneksi!";
+                    resDiv.style.color = "red";
+                    console.error("Error Koneksi:", error);
+                    btnCopy.disabled = false;
+                    btnCopy.innerText = " COBA LAGI";
+                });
+
+            } else {
+                alert("Butuh 500 Uang!");
+            }
+        });
+
+        document.getElementById('btn-close-shop').addEventListener('click', window.closeShop);
+
+        // --- GAME LOGIC & LOOP ---
+
+        function doAction() {
+            if (isShopOpen) return;
+
+            if (currentInteractable) {
+                if (currentInteractable.userData.isPlot) {
+                    const plot = currentInteractable;
+                    if (!plot.userData.hasPlant) {
+                        let seedType = null;
+                        if (inventory.seed_normal > 0) { inventory.seed_normal--; seedType = 'normal'; }
+                        else if (inventory.seed_gold > 0) { inventory.seed_gold--; seedType = 'gold'; }
+
+                        if (seedType) {
+                            plot.userData.hasPlant = true; plot.userData.growth = 0; plot.userData.type = seedType;
+                            const pMat = seedType === 'normal' ? plantMatNormal : plantMatGold;
+                            const mesh = new THREE.Mesh(plantGeo, pMat);
+                            mesh.position.set(0, 0.3, 0); mesh.scale.set(0.1, 0.1, 0.1);
+                            plot.add(mesh); plot.userData.plantMesh = mesh;
+                            updateUI();
+                        } else { alert("Tidak punya bibit!"); }
+                    } else {
+                        if (plot.userData.growth >= 100) {
+                            if (plot.userData.type === 'normal') inventory.crop += 5;
+                            else if (plot.userData.type === 'gold') { inventory.crop += 5; money += 150; }
+                            plot.userData.hasPlant = false; plot.userData.growth = 0;
+                            if(plot.userData.plantMesh) { plot.remove(plot.userData.plantMesh); plot.userData.plantMesh = null; }
+                            updateUI();
+                        } else { alert("Belum siap panen!"); }
+                    }
+                } else if (currentInteractable.userData.type === 'npc') {
+                    window.openShop(currentInteractable.userData.role);
+                }
+            }
+        }
+
+        // Setup Controls
+        const btnUp = document.getElementById('btn-up');
+        const btnDown = document.getElementById('btn-down');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        const btnAction = document.getElementById('btn-action');
+
+        const handleKey = (code, state) => {
+            if(code === 'ArrowUp' || code === 'KeyW') keys.w = state;
+            if(code === 'ArrowDown' || code === 'KeyS') keys.s = state;
+            if(code === 'ArrowLeft' || code === 'KeyA') keys.a = state;
+            if(code === 'ArrowRight' || code === 'KeyD') keys.d = state;
+            if(code === 'Space') {
+                if(state && !keys.action) doAction();
+                keys.action = state;
+            }
+        };
+
+        window.addEventListener('keydown', (e) => handleKey(e.code, true));
+        window.addEventListener('keyup', (e) => handleKey(e.code, false));
+
+        const addTouch = (elem, key) => {
+            elem.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; });
+            elem.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = false; });
+        };
+        addTouch(btnUp, 'w');
+        addTouch(btnDown, 's');
+        addTouch(btnLeft, 'a');
+        addTouch(btnRight, 'd');
+        
+        btnAction.addEventListener('touchstart', (e) => { 
+            e.preventDefault(); 
+            doAction(); 
+        });
+
+        // --- START GAME BUTTON ---
+        const startBtn = document.getElementById('btn-start');
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("Start button ditekan!");
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('ui-layer').style.display = 'block';
+            gameStarted = true;
+            
+            const targetCamPos = new THREE.Vector3().copy(player.position).add(camOffset);
+            camera.position.copy(targetCamPos);
+            camera.lookAt(player.position);
+        });
+
+        // --- GAME LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (!gameStarted) {
+                renderer.render(scene, camera);
+                return;
+            }
+
+            if (!isShopOpen) {
+                let dx = 0; let dz = 0;
+                if (keys.w) dz -= playerSpeed;
+                if (keys.s) dz += playerSpeed;
+                if (keys.a) dx -= playerSpeed;
+                if (keys.d) dx += playerSpeed;
+
+                if (dx !== 0 || dz !== 0) {
+                    isMoving = true;
+                    player.position.x += dx;
+                    player.position.z += dz;
+                    
+                    targetRotation = Math.atan2(dx, dz);
+                    player.rotation.y = targetRotation;
+
+                    const time = Date.now() * 0.01;
+                    player.userData.leftLeg.rotation.x = Math.sin(time) * 0.5;
+                    player.userData.rightLeg.rotation.x = Math.sin(time + Math.PI) * 0.5;
+                    player.userData.leftArm.rotation.x = Math.sin(time + Math.PI) * 0.5;
+                    player.userData.rightArm.rotation.x = Math.sin(time) * 0.5;
+
+                    const dist = player.position.distanceTo(pet.position);
+                    if (dist > 3) {
+                        pet.position.x += (player.position.x - pet.position.x) * 0.05;
+                        pet.position.z += (player.position.z - pet.position.z) * 0.05;
+                        pet.lookAt(player.position);
+                    }
+                } else {
+                    isMoving = false;
+                    player.userData.leftLeg.rotation.x = 0;
+                    player.userData.rightLeg.rotation.x = 0;
+                }
+
+                const targetCamPos = new THREE.Vector3().copy(player.position).add(camOffset);
+                camera.position.lerp(targetCamPos, 0.1);
+                camera.lookAt(player.position);
+
+                let foundInteract = null;
+                let minDist = 2.5;
+
+                plots.forEach(plot => {
+                    const d = player.position.distanceTo(plot.position);
+                    if (d < minDist) {
+                        minDist = d;
+                        foundInteract = plot;
+                    }
+                });
+
+                shopGroup.children.forEach(child => {
+                    if(child.userData.type === 'npc') {
+                        const d = player.position.distanceTo(child.position);
+                        if (d < minDist) {
+                            minDist = d;
+                            foundInteract = child;
+                        }
+                    }
+                });
+
+                currentInteractable = foundInteract;
+                const msg = document.getElementById('interact-msg');
+                if (currentInteractable) {
+                    msg.style.display = 'block';
+                    if(currentInteractable.userData.isPlot) {
+                        msg.innerText = currentInteractable.userData.hasPlant ? "PANEN" : "TANAM";
+                    } else {
+                        msg.innerText = "TOKO " + currentInteractable.userData.role.toUpperCase();
+                    }
+                } else {
+                    msg.style.display = 'none';
+                }
+
+                plots.forEach(plot => {
+                    if (plot.userData.hasPlant && plot.userData.growth < 100) {
+                        plot.userData.growth += 0.05;
+                        if (plot.userData.plantMesh) {
+                            const scale = 0.1 + (plot.userData.growth / 100) * 0.9;
+                            plot.userData.plantMesh.scale.set(scale, scale, scale);
+                            if(plot.userData.growth >= 100) {
+                                plot.userData.plantMesh.material.color.setHex(0xFF9800);
+                            }
+                        }
+                    }
+                });
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

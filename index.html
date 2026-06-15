@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Space Defender - Admin God Mode</title>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXKeIOlD8r0xNM61pzh82og0DBQvlnxEk",
+            authDomain: "fire-me-a2f00.firebaseapp.com",
+            databaseURL: "https://fire-me-a2f00-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "fire-me-a2f00",
+            storageBucket: "fire-me-a2f00.firebasestorage.app",
+            messagingSenderId: "1010150322376",
+            appId: "1:1010150322376:web:625ab284498f3e2bea75fd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        window.firebaseDb = db;
+
+        // Variabel Global untuk status Admin
+        window.isAdminMode = false; 
+
+        // ==========================================
+        // 1. LOGIKA ADMIN & BACKDOOR
+        // ==========================================
+        
+        const ADMIN_KEY = "ADMIN666";
+        const inputField = document.getElementById('secret-input');
+        const startBtn = document.getElementById('start-btn');
+
+        if(inputField) {
+            inputField.addEventListener('input', (e) => {
+                const val = e.target.value.trim().toUpperCase();
+                if (val === ADMIN_KEY) {
+                    activateAdminMode();
+                } else {
+                    // Reset jika salah ketik
+                    if(!inputField.classList.contains('admin-active')) {
+                        // Jangan reset tombol jika sedang cooldown normal, 
+                        // hanya reset style admin
+                        startBtn.classList.remove('hack-btn');
+                        startBtn.innerText = startBtn.disabled ? "COOLDOWN" : "MULAI";
+                    }
+                }
+            });
+        }
+
+        function activateAdminMode() {
+            startBtn.innerText = "OPEN ADMIN PANEL";
+            startBtn.classList.add('hack-btn');
+            startBtn.onclick = openAdminPanel;
+            inputField.classList.add('admin-active');
+        }
+
+        window.openAdminPanel = async function() {
+            const adminPanel = document.getElementById('admin-panel');
+            const codeList = document.getElementById('admin-code-list');
+            
+            adminPanel.classList.remove('hidden');
+            codeList.innerHTML = "Mengambil data...";
+
+            try {
+                const snapshot = await get(ref(db, 'codes'));
+                codeList.innerHTML = ""; 
+
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const keys = Object.keys(data);
+                    
+                    if (keys.length === 0) {
+                        codeList.innerHTML = "<p>Belum ada kode.</p>";
+                    } else {
+                        keys.forEach(key => {
+                            const item = document.createElement('div');
+                            item.className = 'admin-code-item';
+                            item.innerText = key;
+                            item.onclick = () => copyCodeToClipboard(key);
+                            codeList.appendChild(item);
+                        });
+                    }
+                } else {
+                    codeList.innerHTML = "<p>Database Kosong.</p>";
+                }
+            } catch (error) {
+                console.error(error);
+                codeList.innerHTML = "<p style='color:red'>Gagal memuat.</p>";
+            }
+        };
+
+        window.closeAdminPanel = function() {
+            document.getElementById('admin-panel').classList.add('hidden');
+            
+            // SETEL ADMIN MODE KE TRUE
+            window.isAdminMode = true; 
+            
+            // Reset tombol ke kondisi normal siap main (Bypass Cooldown)
+            startBtn.innerText = "MULAI";
+            startBtn.classList.remove('hack-btn');
+            startBtn.onclick = startGameSequence;
+            startBtn.disabled = false; // Paksa enable tombol
+            
+            // Reset input
+            inputField.value = "";
+            inputField.classList.remove('admin-active');
+            
+            // Refresh tampilan menu agar pesan cooldown hilang
+            window.checkPlayEligibility();
+        };
+
+        // Fungsi Salin Kode
+        async function copyCodeToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast(`Kode ${text} Tersalin!`);
+            } catch (err) {
+                showToast("Gagal menyalin");
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ==========================================
+        // 2. SISTEM GAME (Cooldown Bypass untuk Admin)
+        // ==========================================
+
+        function generateUniqueId() {
+            return Math.random().toString(36).substring(2, 10).toUpperCase();
+        }
+
+        window.checkPlayEligibility = function() {
+            const lastPlayTime = localStorage.getItem('neon_game_last_play');
+            const playerUniqueId = localStorage.getItem('neon_game_uid');
+            const now = Date.now();
+            const cooldownMs = 24 * 60 * 60 * 1000; 
+            const uidDisplay = document.getElementById('uid-display');
+            const cooldownMsg = document.getElementById('cooldown-msg');
+
+            // Tampilkan UID jika ada
+            if(playerUniqueId) uidDisplay.innerText = `ID PEMAIN: ${playerUniqueId}`;
+
+            // LOGIKA PENTING: Jika Admin Mode Aktif, Abaikan Cooldown
+            if (window.isAdminMode) {
+                startBtn.disabled = false;
+                startBtn.innerText = "MULAI";
+                cooldownMsg.style.display = 'none';
+                cooldownMsg.innerText = "ADMIN MODE: Cooldown Dinonaktifkan";
+                return true; 
+            }
+
+            // Logika Cooldown Normal
+            if (lastPlayTime && now - lastPlayTime < cooldownMs) {
+                startBtn.disabled = true;
+                startBtn.innerText = "COOLDOWN";
+                const remaining = cooldownMs - (now - lastPlayTime);
+                const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                
+                cooldownMsg.style.display = 'block';
+                cooldownMsg.innerText = `Kembali dalam ${hours} jam ${minutes} menit.`;
+                return false; 
+            } else {
+                startBtn.disabled = false;
+                startBtn.innerText = "MULAI";
+                cooldownMsg.style.display = 'none';
+                return true;
+            }
+        };
+
+        window.prepareGameData = function(callback) {
+            let uid = localStorage.getItem('neon_game_uid');
+            if (!uid) {
+                uid = generateUniqueId();
+                localStorage.setItem('neon_game_uid', uid);
+            }
+            document.getElementById('uid-display').innerText = `ID PEMAIN: ${uid}`;
+            const playerPath = `codes/${uid}`;
+            set(ref(db, `${playerPath}/active`), true);
+            callback(playerPath);
+        };
+
+        window.syncRedeemCode = function(elementId, path) {
+            const codeRef = ref(db, path);
+            onValue(codeRef, (snapshot) => {
+                const htmlElement = document.getElementById(elementId);
+                if (htmlElement) {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        if (data && (data.active !== false || data.cookieRaw)) {
+                            htmlElement.innerText = path.split('/')[1]; 
+                            htmlElement.style.color = "#0f0";
+                            const copyBtn = document.getElementById('copy-btn');
+                            if(copyBtn) {
+                                copyBtn.style.display = 'inline-block';
+                                copyBtn.onclick = () => copyCodeToClipboard(htmlElement.innerText);
+                            }
+                        }
+                    }
+                }
+            });
+        };
+
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #0ff;
+            --danger-color: #f0f;
+            --bg-color: #050510;
+            --text-color: #fff;
+            --hack-border: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+        body {
+            font-family: sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        #game-container {
+            position: relative;
+            width: 100%; max-width: 600px;
+            height: 100%; max-height: 800px;
+            background: radial-gradient(circle at bottom, #1a1a2e 0%, #000 100%);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            overflow: hidden; border: 2px solid #333;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; padding: 15px;
+            display: flex; justify-content: space-between;
+            pointer-events: none; z-index: 10; font-weight: bold; font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+        .modal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 20; text-align: center; padding: 20px; backdrop-filter: blur(5px);
+        }
+        .hidden { display: none !important; }
+        h1 { color: var(--primary-color); margin-bottom: 20px; font-size: 2.5rem; }
+        #uid-display { font-size: 0.8rem; color: #888; margin-bottom: 10px; }
+        #cooldown-msg { color: #f55; font-weight: bold; margin-top: 10px; display: none; }
+
+        #secret-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            color: transparent;
+            text-shadow: 0 0 0 transparent;
+            caret-color: transparent;
+            width: 200px;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+        }
+        #secret-input.admin-active { border-bottom: 1px solid var(--hack-border); }
+
+        /* Admin Panel Styles */
+        #admin-panel {
+            z-index: 50;
+            background: rgba(10, 0, 0, 0.95);
+            border: 1px solid var(--hack-border);
+        }
+        .admin-header {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 15px; border-bottom: 1px solid var(--hack-border); margin-bottom: 15px;
+        }
+        .admin-header h3 { color: var(--hack-border); margin: 0; }
+        .close-admin {
+            background: transparent; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer;
+        }
+        
+        #admin-code-list {
+            width: 100%; max-height: 60%; overflow-y: auto;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;
+        }
+        .admin-code-item {
+            background: #1a1a1a; border: 1px solid #333; padding: 15px;
+            border-radius: 5px; cursor: pointer; font-family: monospace; font-weight: bold;
+            color: var(--primary-color); transition: 0.2s;
+        }
+        .admin-code-item:active { background: var(--hack-border); color: white; }
+
+        /* Reward Box */
+        .reward-box {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            width: 90%;
+            max-width: 350px;
+        }
+        #live-code-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        button {
+            padding: 15px 30px; font-size: 1.2rem; cursor: pointer;
+            background: var(--primary-color); border: none; color: #000;
+            font-weight: bold; border-radius: 5px; text-transform: uppercase;
+            margin-top: 10px;
+        }
+        button:disabled { background: #444; color: #888; cursor: not-allowed; }
+        button:hover:not(:disabled) { background: #fff; }
+        button.hack-btn {
+            background: var(--hack-border); color: white;
+            animation: pulse-red 1.5s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        button.copy-btn {
+            padding: 8px 15px; font-size: 0.9rem; background: #444; color: white; margin-left: 10px; display: none;
+        }
+
+        #toast-notification {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #fff; color: #000; padding: 10px 20px; border-radius: 20px;
+            font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        #toast-notification.show { opacity: 1; }
+
+        /* Mobile Controls */
+        .mobile-controls {
+            position: absolute; bottom: 20px; left: 0; width: 100%; height: 100px;
+            padding: 0 20px; display: none; justify-content: space-between; z-index: 15;
+        }
+        .touch-btn {
+            width: 70px; height: 70px; background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.5); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 24px;
+            user-select: none; pointer-events: auto;
+        }
+        .touch-group { display: flex; gap: 20px; pointer-events: auto; }
+        @media (hover: none) and (pointer: coarse) { .mobile-controls { display: flex; } }
+    </style>
+</head>
+<body onload="window.checkPlayEligibility()">
+
+    <div id="game-container">
+        <!-- UI -->
+        <div class="ui-layer">
+            <div id="score-display">SKOR: 0</div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Mobile Controls -->
+        <div class="mobile-controls">
+            <div class="touch-group">
+                <div class="touch-btn" id="btn-left">←</div>
+                <div class="touch-btn" id="btn-right">→</div>
+            </div>
+            <div class="touch-btn" id="btn-fire">🔥</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="modal">
+            <h1>Neon Sync</h1>
+            <div id="uid-display">MEMUAT ID...</div>
+            <input type="text" id="secret-input" placeholder=" " autocomplete="off">
+            <p>Capai skor 50 untuk dapatkan kode unik Anda.</p>
+            <div id="cooldown-msg"></div>
+            <button id="start-btn" onclick="startGameSequence()">MULAI</button>
+        </div>
+
+        <!-- ADMIN PANEL OVERLAY -->
+        <div id="admin-panel" class="modal hidden">
+            <div class="admin-header">
+                <h3>ADMIN ACCESS</h3>
+                <button class="close-admin" onclick="closeAdminPanel()">CLOSE</button>
+            </div>
+            <p style="font-size: 0.8rem; color:#aaa; margin-bottom:10px;">Tap code to copy</p>
+            <div id="admin-code-list">
+                <!-- Daftar kode akan muncul di sini -->
+            </div>
+        </div>
+
+        <!-- Reward Screen -->
+        <div id="reward-screen" class="modal hidden">
+            <h1>MISI SUKSES!</h1>
+            <p>Kode Unik Anda:</p>
+            <div class="reward-box">
+                <div id="live-code-display">Processing...</div>
+                <button id="copy-btn" class="copy-btn">SALIN</button>
+            </div>
+            <p>Simpan kode ini dengan baik!</p>
+            <button id="play-again-btn" onclick="location.reload()">KEMBALI KE MENU</button>
+        </div>
+
+        <!-- Game Over -->
+        <div id="game-over-screen" class="modal hidden">
+            <h2>GAME OVER</h2>
+            <p>Skor: <span id="final-score">0</span></p>
+            <button onclick="location.reload()">KEMBALI KE MENU</button>
+        </div>
+
+        <!-- Toast Notification Element -->
+        <div id="toast-notification"></div>
+    </div>
+
+    <script type="module">
+        // --- LOGIKA GAME ---
+        
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameRunning = false;
+        let score = 0;
+        let lastTime = 0;
+        let keys = { ArrowLeft: false, ArrowRight: false, a: false, d: false, Space: false };
+        let currentPlayerPath = ""; 
+
+        function resize() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        window.startGameSequence = function() {
+            // Cek lagi, jika admin mode aktif maka pasti lolos
+            if(!window.isAdminMode && !window.checkPlayEligibility()) return; 
+            
+            window.prepareGameData((path) => {
+                currentPlayerPath = path;
+                initGame();
+            });
+        };
+
+        class Player {
+            constructor() {
+                this.w = 40; this.h = 40; this.x = canvas.width/2-20; this.y = canvas.height-60; this.speed = 400; this.bullets = [];
+            }
+            update(dt) {
+                if((keys.ArrowLeft||keys.a) && this.x>0) this.x -= this.speed*dt;
+                if((keys.ArrowRight||keys.d) && this.x<canvas.width-this.w) this.x += this.speed*dt;
+                if(keys.Space && this.bullets.length<5) {
+                    this.bullets.push({x: this.x+this.w/2, y: this.y, marked:false});
+                    keys.Space = false; 
+                }
+            }
+            draw(ctx) {
+                ctx.fillStyle = '#0ff'; ctx.beginPath();
+                ctx.moveTo(this.x+20, this.y); ctx.lineTo(this.x+40, this.y+40); ctx.lineTo(this.x, this.y+40); ctx.fill();
+            }
+        }
+        class Enemy {
+            constructor() {
+                this.w = 30; this.h = 30; this.x = Math.random()*(canvas.width-30); this.y = -30; this.speed = 200;
+            }
+            update(dt) { this.y += this.speed*dt; }
+            draw(ctx) { ctx.fillStyle = '#f0f'; ctx.fillRect(this.x, this.y, this.w, this.h); }
+        }
+
+        let player, enemies = [], bullets = [];
+
+        function initGame() {
+            player = new Player(); enemies = []; bullets = []; score = 0;
+            document.getElementById('score-display').innerText = "SKOR: 0";
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-over-screen').classList.add('hidden');
+            document.getElementById('reward-screen').classList.add('hidden');
+            
+            document.getElementById('live-code-display').innerText = "Menunggu...";
+            document.getElementById('live-code-display').style.color = "#fff";
+            
+            gameRunning = true; lastTime = performance.now();
+            requestAnimationFrame(loop);
+        }
+
+        function loop(now) {
+            if(!gameRunning) return;
+            let dt = (now - lastTime)/1000; lastTime = now;
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+
+            player.update(dt); player.draw(ctx);
+            
+            player.bullets.forEach(b => { b.y -= 600*dt; if(b.y<0) b.marked=true; });
+            player.bullets = player.bullets.filter(b => !b.marked);
+            player.bullets.forEach(b => { ctx.fillStyle='#ff0'; ctx.fillRect(b.x-2, b.y, 4, 15); });
+
+            if(Math.random()<0.02) enemies.push(new Enemy());
+            enemies.forEach(e => { e.update(dt); e.draw(ctx); });
+
+            player.bullets.forEach(b => {
+                enemies.forEach(e => {
+                    if(b.x>e.x && b.x<e.x+e.w && b.y>e.y && b.y<e.y+e.h && !e.marked) {
+                        e.marked=true; b.marked=true; score+=10;
+                        document.getElementById('score-display').innerText = "SKOR: "+score;
+                        if(score >= 50) showReward();
+                    }
+                });
+            });
+            
+            enemies.forEach(e => {
+                if(e.y > canvas.height-50 && !e.marked) { endGame(); }
+            });
+            
+            enemies = enemies.filter(e => !e.marked);
+            requestAnimationFrame(loop);
+        }
+
+        function endGame() {
+            gameRunning = false;
+            document.getElementById('game-over-screen').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+        }
+
+        function showReward() {
+            gameRunning = false;
+            localStorage.setItem('neon_game_last_play', Date.now());
+            document.getElementById('reward-screen').classList.remove('hidden');
+            window.syncRedeemCode('live-code-display', currentPlayerPath);
+        }
+
+        // Controls
+        window.addEventListener('keydown', e => {
+            if(e.code==='Space') keys.Space=true;
+            if(e.key==='ArrowLeft') keys.ArrowLeft=true;
+            if(e.key==='ArrowRight') keys.ArrowRight=true;
+            if(e.key==='a'||e.key==='A') keys.a=true;
+            if(e.key==='d'||e.key==='D') keys.d=true;
+        });
+        window.addEventListener('keyup', e => {
+            if(e.code==='Space') keys.Space=false;
+            if(e.key==='ArrowLeft') keys.ArrowLeft=false;
+            if(e.key==='ArrowRight') keys.ArrowRight=false;
+            if(e.key==='a'||e.key==='A') keys.a=false;
+            if(e.key==='d'||e.key==='D') keys.d=false;
+        });
+
+        const addTouch = (el, k) => {
+            el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[k]=true; });
+            el.addEventListener('touchend', (e) => { e.preventDefault(); keys[k]=false; });
+        };
+        addTouch(document.getElementById('btn-left'), 'ArrowLeft');
+        addTouch(document.getElementById('btn-right'), 'ArrowRight');
+        addTouch(document.getElementById('btn-fire'), 'Space');
+
+    </script>
+</body>
+</html>

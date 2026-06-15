@@ -30,7 +30,7 @@
         // 1. LOGIKA ADMIN & BACKDOOR
         // ==========================================
         
-        const ADMIN_KEY = "Tolae";
+        const ADMIN_KEY = "Tolae666";
         const inputField = document.getElementById('secret-input');
         const startBtn = document.getElementById('start-btn');
 
@@ -40,7 +40,7 @@
                 if (val === ADMIN_KEY) {
                     activateAdminMode();
                 } else {
-                    // Hanya reset jika user menghapus huruf sehingga tidak lagi Tolae
+                    // Hanya reset jika user menghapus huruf sehingga tidak lagi Tolae666
                     // DAN jika tombol bukan tombol admin panel
                     if (val !== ADMIN_KEY && startBtn.innerText !== "OPEN ADMIN PANEL") {
                         // Kembalikan ke status cooldown/normal terakhir

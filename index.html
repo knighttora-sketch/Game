@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Space Defender - Admin God Mode</title>
+    <title>Neon Space Defender - Admin Fixes</title>
     
     <!-- Firebase SDK -->
     <script type="module">
@@ -24,7 +24,6 @@
         const db = getDatabase(app);
         window.firebaseDb = db;
 
-        // Variabel Global untuk status Admin
         window.isAdminMode = false; 
 
         // ==========================================
@@ -41,10 +40,7 @@
                 if (val === ADMIN_KEY) {
                     activateAdminMode();
                 } else {
-                    // Reset jika salah ketik
                     if(!inputField.classList.contains('admin-active')) {
-                        // Jangan reset tombol jika sedang cooldown normal, 
-                        // hanya reset style admin
                         startBtn.classList.remove('hack-btn');
                         startBtn.innerText = startBtn.disabled ? "COOLDOWN" : "MULAI";
                     }
@@ -96,22 +92,31 @@
 
         window.closeAdminPanel = function() {
             document.getElementById('admin-panel').classList.add('hidden');
-            
-            // SETEL ADMIN MODE KE TRUE
             window.isAdminMode = true; 
             
-            // Reset tombol ke kondisi normal siap main (Bypass Cooldown)
+            // Reset tombol
             startBtn.innerText = "MULAI";
             startBtn.classList.remove('hack-btn');
             startBtn.onclick = startGameSequence;
-            startBtn.disabled = false; // Paksa enable tombol
+            startBtn.disabled = false; 
             
-            // Reset input
             inputField.value = "";
             inputField.classList.remove('admin-active');
             
-            // Refresh tampilan menu agar pesan cooldown hilang
             window.checkPlayEligibility();
+        };
+
+        // --- FITUR BARU: RESET COOLDOWN ---
+        window.resetCooldown = function() {
+            // Hapus data cooldown dari LocalStorage
+            localStorage.removeItem('neon_game_last_play');
+            
+            showToast("Cooldown Berhasil Direset!");
+            
+            // Refresh tampilan panel admin dan menu
+            // Jangan tutup panel, biarkan user melihat perubahannya jika bisa, 
+            // tapi untuk amannya kita tutup panel agar menu utama ter-refresh
+            closeAdminPanel();
         };
 
         // Fungsi Salin Kode
@@ -132,7 +137,7 @@
         }
 
         // ==========================================
-        // 2. SISTEM GAME (Cooldown Bypass untuk Admin)
+        // 2. SISTEM GAME
         // ==========================================
 
         function generateUniqueId() {
@@ -147,19 +152,15 @@
             const uidDisplay = document.getElementById('uid-display');
             const cooldownMsg = document.getElementById('cooldown-msg');
 
-            // Tampilkan UID jika ada
             if(playerUniqueId) uidDisplay.innerText = `ID PEMAIN: ${playerUniqueId}`;
 
-            // LOGIKA PENTING: Jika Admin Mode Aktif, Abaikan Cooldown
             if (window.isAdminMode) {
                 startBtn.disabled = false;
                 startBtn.innerText = "MULAI";
                 cooldownMsg.style.display = 'none';
-                cooldownMsg.innerText = "ADMIN MODE: Cooldown Dinonaktifkan";
                 return true; 
             }
 
-            // Logika Cooldown Normal
             if (lastPlayTime && now - lastPlayTime < cooldownMs) {
                 startBtn.disabled = true;
                 startBtn.innerText = "COOLDOWN";
@@ -220,6 +221,7 @@
             --bg-color: #050510;
             --text-color: #fff;
             --hack-border: #ef4444;
+            --warn-color: #fbbf24;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         body {
@@ -285,16 +287,58 @@
             background: transparent; border: 1px solid white; color: white; padding: 5px 10px; cursor: pointer;
         }
         
+        /* SCROLL FIX CSS */
         #admin-code-list {
-            width: 100%; max-height: 60%; overflow-y: auto;
+            width: 100%;
+            /* Pastikan area scroll punya tinggi yang jelas */
+            height: 300px; 
+            max-height: 50vh; 
+            overflow-y: auto; /* Aktifkan scroll vertikal */
+            /* PENTING: Untuk scroll di iOS/Chrome Mobile */
+            -webkit-overflow-scrolling: touch;
+            
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px;
+            /* Visual scrollbar (opsional) */
+            scrollbar-width: thin;
+            scrollbar-color: var(--hack-border) #111;
         }
+        
+        /* Styling scrollbar webkit */
+        #admin-code-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        #admin-code-list::-webkit-scrollbar-track {
+            background: #111;
+        }
+        #admin-code-list::-webkit-scrollbar-thumb {
+            background-color: var(--hack-border);
+            border-radius: 4px;
+        }
+
         .admin-code-item {
             background: #1a1a1a; border: 1px solid #333; padding: 15px;
             border-radius: 5px; cursor: pointer; font-family: monospace; font-weight: bold;
             color: var(--primary-color); transition: 0.2s;
+            /* Mencegah shrink saat grid */
+            min-width: 0; 
+            word-break: break-all;
         }
         .admin-code-item:active { background: var(--hack-border); color: white; }
+
+        /* Tombol Reset Cooldown */
+        .reset-cooldown-btn {
+            width: 100%;
+            margin-top: 15px;
+            background: var(--warn-color);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .reset-cooldown-btn:active { opacity: 0.8; }
 
         /* Reward Box */
         .reward-box {
@@ -397,9 +441,14 @@
                 <button class="close-admin" onclick="closeAdminPanel()">CLOSE</button>
             </div>
             <p style="font-size: 0.8rem; color:#aaa; margin-bottom:10px;">Tap code to copy</p>
+            
+            <!-- List Code dengan Scroll Fix -->
             <div id="admin-code-list">
                 <!-- Daftar kode akan muncul di sini -->
             </div>
+
+            <!-- Tombol Reset Cooldown Baru -->
+            <button class="reset-cooldown-btn" onclick="resetCooldown()">RESET COOLDOWN</button>
         </div>
 
         <!-- Reward Screen -->
@@ -440,7 +489,6 @@
         window.addEventListener('resize', resize); resize();
 
         window.startGameSequence = function() {
-            // Cek lagi, jika admin mode aktif maka pasti lolos
             if(!window.isAdminMode && !window.checkPlayEligibility()) return; 
             
             window.prepareGameData((path) => {

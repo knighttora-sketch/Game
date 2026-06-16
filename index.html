@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Harvest Valley - Ultimate Fix</title>
+    <title>Harvest Valley - GitHub Ready</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; touch-action: none; user-select: none; }
+        body { margin: 0; overflow: hidden; background: #222; font-family: 'Segoe UI', sans-serif; touch-action: none; user-select: none; }
         
         #loader {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -142,17 +142,18 @@
     <!-- LOADING SCREEN -->
     <div id="loader">
         <h1>HARVEST VALLEY</h1>
-        <p>Keyboard: WASD + SPACE | Mouse: Click</p>
+        <p>GitHub Friendly Version</p>
         <button id="btn-start">MULAI GAME</button>
     </div>
 
     <!-- UI LAYER -->
     <div id="ui-layer">
-        <div id="money-display" class="hud-panel"> <span id="money-val">0</span></div>
+        <div id="money-display" class="hud-panel">ðŸ’° <span id="money-val">0</span></div>
         <div id="inventory-box" class="hud-panel">
-            <div class="inv-slot" id="slot-0"><div class="inv-count" id="count-0">0</div></div>
-            <div class="inv-slot" id="slot-1"><div class="inv-count" id="count-1">0</div></div>
-            <div class="inv-slot" id="slot-2"><div class="inv-count" id="count-2">0</div></div>
+            <!-- Menggunakan Emoji agar ikon muncul di GitHub tanpa upload file gambar -->
+            <div class="inv-slot" id="slot-0">ðŸŒ±<div class="inv-count" id="count-0">0</div></div>
+            <div class="inv-slot" id="slot-1">ðŸ¥•<div class="inv-slot" id="count-1">0</div></div>
+            <div class="inv-slot" id="slot-2">ðŸ‘‘<div class="inv-count" id="count-2">0</div></div>
         </div>
         <div id="interact-msg">AKSI (SPASI)</div>
         
@@ -167,7 +168,7 @@
                 
                 <div class="copy-container">
                     <div id="code-result"></div>
-                    <button id="btn-copy-code" class="btn-copy"> TUNGGU...</button>
+                    <button id="btn-copy-code" class="btn-copy">ðŸ“‹ TUNGGU...</button>
                     <div id="copy-status" style="font-size:10px; color:#666; text-align:center;"></div>
                 </div>
             </div>
@@ -180,14 +181,14 @@
     <div id="controls">
         <div class="control-group d-pad">
             <div></div>
-            <div class="pad-btn" id="btn-up"></div>
+            <div class="pad-btn" id="btn-up">â–²</div>
             <div></div>
-            <div class="pad-btn" id="btn-left"></div>
-            <div class="pad-btn" id="btn-down"></div>
-            <div class="pad-btn" id="btn-right"></div>
+            <div class="pad-btn" id="btn-left">â—€</div>
+            <div class="pad-btn" id="btn-down">â–¼</div>
+            <div class="pad-btn" id="btn-right">â–¶</div>
         </div>
         <div class="control-group">
-            <div class="action-btn" id="btn-action"></div>
+            <div class="action-btn" id="btn-action">âš”ï¸</div>
         </div>
     </div>
 
@@ -438,7 +439,8 @@
             document.getElementById('money-val').innerText = Math.floor(money);
             window.money = money;
             document.getElementById('count-0').innerText = inventory.seed_normal;
-            document.getElementById('count-1').innerText = inventory.crop;
+            // Perbaiki innerText slot di sini
+            document.getElementById('count-1').innerText = inventory.crop; // Pastikan ID sesuai HTML div
             document.getElementById('count-2').innerText = inventory.seed_gold;
         }
 
@@ -459,7 +461,7 @@
             list.innerHTML = '';
             document.getElementById('code-result').innerText = '';
             document.getElementById('code-result').style.color = "#333";
-            document.getElementById('btn-copy-code').innerText = " TUNGGU...";
+            document.getElementById('btn-copy-code').innerText = "ðŸ“‹ TUNGGU...";
             document.getElementById('btn-copy-code').disabled = true;
             document.getElementById('copy-status').innerText = "";
             redeemSec.style.display = 'none';
@@ -569,7 +571,7 @@
             resDiv.innerText = "Mengecek Saldo...";
             resDiv.style.color = "#333";
             btnCopy.disabled = true;
-            btnCopy.innerText = " TUNGGU...";
+            btnCopy.innerText = "ðŸ“‹ TUNGGU...";
             statusDiv.innerText = "";
             
             if (money < HARGA_CODE) {
@@ -583,7 +585,7 @@
                 resDiv.innerText = "Error: DB Offline"; 
                 resDiv.style.color = "red";
                 btnCopy.disabled = false;
-                btnCopy.innerText = " COBA LAGI";
+                btnCopy.innerText = "ðŸ“‹ COBA LAGI";
                 return; 
             }
 
@@ -609,16 +611,16 @@
                         
                         if (navigator.clipboard && navigator.clipboard.writeText) {
                             navigator.clipboard.writeText(selectedKey).then(() => {
-                                statusDiv.innerText = " Otomatis Disalin!";
-                                btnCopy.innerText = " DISALIN!";
+                                statusDiv.innerText = "âœ… Otomatis Disalin!";
+                                btnCopy.innerText = "ðŸ“‹ DISALIN!";
                                 btnCopy.disabled = true;
                             }).catch(err => {
-                                btnCopy.innerText = " SALIN MANUAL";
+                                btnCopy.innerText = "ðŸ“‹ SALIN MANUAL";
                                 btnCopy.disabled = false;
                                 statusDiv.innerText = "Auto copy gagal. Tekan tombol di bawah.";
                             });
                         } else {
-                            btnCopy.innerText = " SALIN MANUAL";
+                            btnCopy.innerText = "ðŸ“‹ SALIN MANUAL";
                             btnCopy.disabled = false;
                             statusDiv.innerText = "Browser tidak support auto-copy. Gunakan tombol manual.";
                         }
@@ -630,7 +632,7 @@
                         resDiv.innerText = "Stok HABIS";
                         resDiv.style.color = "red";
                         btnCopy.disabled = true;
-                        btnCopy.innerText = " KOSONG";
+                        btnCopy.innerText = "ðŸ“‹ KOSONG";
                     }
                 } else {
                     alert("Database Kosong! Uang dikembalikan.");
@@ -639,7 +641,7 @@
                     resDiv.innerText = "Database Kosong";
                     resDiv.style.color = "red";
                     btnCopy.disabled = true;
-                    btnCopy.innerText = " ERROR";
+                    btnCopy.innerText = "ðŸ“‹ ERROR";
                 }
             }).catch((error) => {
                 alert("Gagal mengambil data! Uang dikembalikan.");
@@ -649,7 +651,7 @@
                 resDiv.style.color = "red";
                 console.error("Error Koneksi:", error);
                 btnCopy.disabled = false;
-                btnCopy.innerText = " COBA LAGI";
+                btnCopy.innerText = "ðŸ“‹ COBA LAGI";
             });
         });
 
@@ -693,19 +695,18 @@
 
         // --- HYBRID CONTROLS (FIXED) ---
         
-        // 1. Setup Tombol
         const btnUp = document.getElementById('btn-up');
         const btnDown = document.getElementById('btn-down');
         const btnLeft = document.getElementById('btn-left');
         const btnRight = document.getElementById('btn-right');
         const btnAction = document.getElementById('btn-action');
 
-        // 2. Fungsi Update Input (Untuk Keyboard & Tombol Layar)
+        // Fungsi Update Input
         function setInput(key, state) {
             keys[key] = state;
         }
 
-        // 3. Event Keyboard PC
+        // Event Keyboard PC
         window.addEventListener('keydown', (e) => {
             if (e.code === 'ArrowUp' || e.code === 'KeyW') setInput('w', true);
             if (e.code === 'ArrowDown' || e.code === 'KeyS') setInput('s', true);
@@ -725,7 +726,7 @@
             if (e.code === 'Space') setInput('action', false);
         });
 
-        // 4. Event Tombol Layar (HP/PC Click) - FIX STUCK
+        // Event Tombol Layar (Fix: AddEventListener secara langsung)
         function bindPress(elem, key) {
             const startAction = (e) => {
                 if (e.cancelable) e.preventDefault();
@@ -749,14 +750,14 @@
         bindPress(btnLeft, 'a');
         bindPress(btnRight, 'd');
 
-        // Fungsi Tombol Aksi (Spasi) - Klik Sekali
+        // Fungsi Tombol Aksi (Spasi)
         btnAction.addEventListener('click', (e) => {
             e.preventDefault();
             doAction();
         });
-        btnAction.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            doAction();
+        btnAction.addEventListener('touchstart', (e) => { 
+            e.preventDefault(); 
+            doAction(); 
         }, { passive: false });
 
         // --- START GAME BUTTON ---

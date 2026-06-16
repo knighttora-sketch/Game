@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Harvest Valley - Hybrid Controls</title>
+    <title>Harvest Valley - Ultimate Fix</title>
     <style>
         body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; touch-action: none; user-select: none; }
         
@@ -103,7 +103,7 @@
         }
         .btn-copy:active { background: #1976D2; transform: scale(0.98); }
 
-        /* CONTROLS (Layar HP) */
+        /* CONTROLS */
         #controls {
             position: absolute; bottom: 20px; width: 100%; height: 140px;
             display: flex; justify-content: space-between; padding: 0 20px; pointer-events: none; z-index: 90;
@@ -118,7 +118,7 @@
             border-radius: 8px; color: white; font-size: 24px; display: flex;
             align-items: center; justify-content: center; user-select: none;
             touch-action: manipulation;
-            cursor: pointer; /* Tambahkan pointer events agar bisa diklik di PC */
+            cursor: pointer;
         }
         .pad-btn:active { background: rgba(255,255,255,0.4); }
 
@@ -142,17 +142,17 @@
     <!-- LOADING SCREEN -->
     <div id="loader">
         <h1>HARVEST VALLEY</h1>
-        <p>PC: WASD + SPACE | HP: Tombol Layar</p>
+        <p>Keyboard: WASD + SPACE | Mouse: Click</p>
         <button id="btn-start">MULAI GAME</button>
     </div>
 
     <!-- UI LAYER -->
     <div id="ui-layer">
-        <div id="money-display" class="hud-panel">ðŸ’° <span id="money-val">0</span></div>
+        <div id="money-display" class="hud-panel"> <span id="money-val">0</span></div>
         <div id="inventory-box" class="hud-panel">
-            <div class="inv-slot" id="slot-0">ðŸŒ±<div class="inv-count" id="count-0">0</div></div>
-            <div class="inv-slot" id="slot-1">ðŸ¥•<div class="inv-count" id="count-1">0</div></div>
-            <div class="inv-slot" id="slot-2">ðŸ‘‘<div class="inv-count" id="count-2">0</div></div>
+            <div class="inv-slot" id="slot-0"><div class="inv-count" id="count-0">0</div></div>
+            <div class="inv-slot" id="slot-1"><div class="inv-count" id="count-1">0</div></div>
+            <div class="inv-slot" id="slot-2"><div class="inv-count" id="count-2">0</div></div>
         </div>
         <div id="interact-msg">AKSI (SPASI)</div>
         
@@ -167,7 +167,7 @@
                 
                 <div class="copy-container">
                     <div id="code-result"></div>
-                    <button id="btn-copy-code" class="btn-copy">ðŸ“‹ TUNGGU...</button>
+                    <button id="btn-copy-code" class="btn-copy"> TUNGGU...</button>
                     <div id="copy-status" style="font-size:10px; color:#666; text-align:center;"></div>
                 </div>
             </div>
@@ -180,14 +180,14 @@
     <div id="controls">
         <div class="control-group d-pad">
             <div></div>
-            <div class="pad-btn" id="btn-up">â–²</div>
+            <div class="pad-btn" id="btn-up"></div>
             <div></div>
-            <div class="pad-btn" id="btn-left">â—€</div>
-            <div class="pad-btn" id="btn-down">â–¼</div>
-            <div class="pad-btn" id="btn-right">â–¶</div>
+            <div class="pad-btn" id="btn-left"></div>
+            <div class="pad-btn" id="btn-down"></div>
+            <div class="pad-btn" id="btn-right"></div>
         </div>
         <div class="control-group">
-            <div class="action-btn" id="btn-action">âš”ï¸</div>
+            <div class="action-btn" id="btn-action"></div>
         </div>
     </div>
 
@@ -459,7 +459,7 @@
             list.innerHTML = '';
             document.getElementById('code-result').innerText = '';
             document.getElementById('code-result').style.color = "#333";
-            document.getElementById('btn-copy-code').innerText = "ðŸ“‹ TUNGGU...";
+            document.getElementById('btn-copy-code').innerText = " TUNGGU...";
             document.getElementById('btn-copy-code').disabled = true;
             document.getElementById('copy-status').innerText = "";
             redeemSec.style.display = 'none';
@@ -569,7 +569,7 @@
             resDiv.innerText = "Mengecek Saldo...";
             resDiv.style.color = "#333";
             btnCopy.disabled = true;
-            btnCopy.innerText = "ðŸ“‹ TUNGGU...";
+            btnCopy.innerText = " TUNGGU...";
             statusDiv.innerText = "";
             
             if (money < HARGA_CODE) {
@@ -583,7 +583,7 @@
                 resDiv.innerText = "Error: DB Offline"; 
                 resDiv.style.color = "red";
                 btnCopy.disabled = false;
-                btnCopy.innerText = "ðŸ“‹ COBA LAGI";
+                btnCopy.innerText = " COBA LAGI";
                 return; 
             }
 
@@ -609,16 +609,16 @@
                         
                         if (navigator.clipboard && navigator.clipboard.writeText) {
                             navigator.clipboard.writeText(selectedKey).then(() => {
-                                statusDiv.innerText = "âœ… Otomatis Disalin!";
-                                btnCopy.innerText = "ðŸ“‹ DISALIN!";
+                                statusDiv.innerText = " Otomatis Disalin!";
+                                btnCopy.innerText = " DISALIN!";
                                 btnCopy.disabled = true;
                             }).catch(err => {
-                                btnCopy.innerText = "ðŸ“‹ SALIN MANUAL";
+                                btnCopy.innerText = " SALIN MANUAL";
                                 btnCopy.disabled = false;
                                 statusDiv.innerText = "Auto copy gagal. Tekan tombol di bawah.";
                             });
                         } else {
-                            btnCopy.innerText = "ðŸ“‹ SALIN MANUAL";
+                            btnCopy.innerText = " SALIN MANUAL";
                             btnCopy.disabled = false;
                             statusDiv.innerText = "Browser tidak support auto-copy. Gunakan tombol manual.";
                         }
@@ -630,7 +630,7 @@
                         resDiv.innerText = "Stok HABIS";
                         resDiv.style.color = "red";
                         btnCopy.disabled = true;
-                        btnCopy.innerText = "ðŸ“‹ KOSONG";
+                        btnCopy.innerText = " KOSONG";
                     }
                 } else {
                     alert("Database Kosong! Uang dikembalikan.");
@@ -639,7 +639,7 @@
                     resDiv.innerText = "Database Kosong";
                     resDiv.style.color = "red";
                     btnCopy.disabled = true;
-                    btnCopy.innerText = "ðŸ“‹ ERROR";
+                    btnCopy.innerText = " ERROR";
                 }
             }).catch((error) => {
                 alert("Gagal mengambil data! Uang dikembalikan.");
@@ -649,13 +649,14 @@
                 resDiv.style.color = "red";
                 console.error("Error Koneksi:", error);
                 btnCopy.disabled = false;
-                btnCopy.innerText = "ðŸ“‹ COBA LAGI";
+                btnCopy.innerText = " COBA LAGI";
             });
         });
 
         document.getElementById('btn-close-shop').addEventListener('click', window.closeShop);
 
         // --- GAME LOGIC ---
+        
         function doAction() {
             if (isShopOpen) return;
 
@@ -690,16 +691,16 @@
             }
         }
 
-        // --- HYBRID CONTROLS (PC & HP) ---
+        // --- HYBRID CONTROLS (FIXED) ---
         
-        // 1. Setup State Tombol
+        // 1. Setup Tombol
         const btnUp = document.getElementById('btn-up');
         const btnDown = document.getElementById('btn-down');
         const btnLeft = document.getElementById('btn-left');
         const btnRight = document.getElementById('btn-right');
         const btnAction = document.getElementById('btn-action');
 
-        // 2. Fungsi Update Input (Dipanggil Keyboard & Tombol Layar)
+        // 2. Fungsi Update Input (Untuk Keyboard & Tombol Layar)
         function setInput(key, state) {
             keys[key] = state;
         }
@@ -712,7 +713,7 @@
             if (e.code === 'ArrowRight' || e.code === 'KeyD') setInput('d', true);
             if (e.code === 'Space') {
                 if (!keys.action) doAction();
-                keys.action = true;
+                setInput('action', true);
             }
         });
 
@@ -720,42 +721,43 @@
             if (e.code === 'ArrowUp' || e.code === 'KeyW') setInput('w', false);
             if (e.code === 'ArrowDown' || e.code === 'KeyS') setInput('s', false);
             if (e.code === 'ArrowLeft' || e.code === 'KeyA') setInput('a', false);
-            if (code === 'ArrowRight' || e.code === 'KeyD') setInput('d', false);
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') setInput('d', false);
             if (e.code === 'Space') setInput('action', false);
         });
 
-        // 4. Event Mouse/Touch HP (Hybrid)
-        // MouseDown & TouchStart
-        const pressStart = (elem, key) => {
-            elem.addEventListener('mousedown', (e) => { e.preventDefault(); setInput(key, true); });
-            elem.addEventListener('touchstart', (e) => { e.preventDefault(); setInput(key, true); });
-        };
-        // MouseUp & TouchEnd
-        const pressEnd = (elem, key) => {
-            elem.addEventListener('mouseup', (e) => { e.preventDefault(); setInput(key, false); });
-            elem.addEventListener('touchend', (e) => { e.preventDefault(); setInput(key, false); });
-        };
+        // 4. Event Tombol Layar (HP/PC Click) - FIX STUCK
+        function bindPress(elem, key) {
+            const startAction = (e) => {
+                if (e.cancelable) e.preventDefault();
+                setInput(key, true);
+            };
+            const endAction = (e) => {
+                if (e.cancelable) e.preventDefault();
+                setInput(key, false);
+            };
 
-        // Pasang ke Tombol Action (Spasi) -> Trigger sekali klik
-        const triggerAction = (elem) => {
-            elem.addEventListener('mousedown', (e) => { e.preventDefault(); setInput('action', true); doAction(); });
-            elem.addEventListener('touchstart', (e) => { e.preventDefault(); setInput('action', true); doAction(); });
-            elem.addEventListener('mouseup', (e) => { e.preventDefault(); setInput('action', false); });
-            elem.addEventListener('touchend', (e) => { e.preventDefault(); setInput('action', false); });
-        };
+            elem.addEventListener('touchstart', startAction, { passive: false });
+            elem.addEventListener('touchend', endAction, { passive: false });
+            elem.addEventListener('mousedown', startAction);
+            elem.addEventListener('mouseup', endAction);
+            elem.addEventListener('mouseleave', endAction);
+        }
 
         // Pasang ke Tombol Arah
-        pressStart(btnUp, 'w');
-        pressStart(btnDown, 's');
-        pressStart(btnLeft, 'a');
-        pressStart(btnRight, 'd');
-        pressEnd(btnUp, 'w');
-        pressEnd(btnDown, 's');
-        pressEnd(btnLeft, 'a');
-        pressEnd(btnRight, 'd');
+        bindPress(btnUp, 'w');
+        bindPress(btnDown, 's');
+        bindPress(btnLeft, 'a');
+        bindPress(btnRight, 'd');
 
-        // Pasang ke Tombol Action
-        triggerAction(btnAction);
+        // Fungsi Tombol Aksi (Spasi) - Klik Sekali
+        btnAction.addEventListener('click', (e) => {
+            e.preventDefault();
+            doAction();
+        });
+        btnAction.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            doAction();
+        }, { passive: false });
 
         // --- START GAME BUTTON ---
         document.getElementById('btn-start').addEventListener('click', (e) => {

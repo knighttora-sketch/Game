@@ -499,11 +499,11 @@
                 title.innerText = "ROBOT TANI";
                 const item = document.createElement('div');
                 item.className = 'shop-item';
-                item.innerHTML = `<span>Jasa Robot (Tanam & Panen)</span><button class="btn-buy btn-robot" id="btn-hire-robot">SEWA (300)</button>`;
+                item.innerHTML = `<span>Jasa Robot (Tanam & Panen)</span><button class="btn-buy btn-robot" id="btn-hire-robot">SEWA (2000)</button>`;
                 list.appendChild(item);
                 document.getElementById('btn-hire-robot').onclick = function() {
-                    if(money >= 300) {
-                        money -= 300; updateUI();
+                    if(money >= 2000) {
+                        money -= 2000; updateUI();
                         let plotsModified = 0;
                         plots.forEach(plot => {
                             if (plot.userData.hasPlant && plot.userData.growth >= 100) {
